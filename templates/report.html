@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instagram 競合分析レポート</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg: #0f0f13;
+    --surface: #1a1a24;
+    --surface2: #22222f;
+    --border: #2e2e40;
+    --accent: #7c6af7;
+    --accent2: #f06292;
+    --accent3: #4dd0e1;
+    --text: #e8e8f0;
+    --text2: #9494a8;
+    --green: #66bb6a;
+    --yellow: #ffa726;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
+
+  /* Layout */
+  .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .main { padding: 32px; max-width: 1200px; }
+
+  /* Sidebar */
+  .sidebar-brand { padding: 0 20px 24px; border-bottom: 1px solid var(--border); }
+  .sidebar-brand h2 { font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+  .sidebar-brand p { font-size: 11px; color: var(--text2); margin-top: 4px; }
+  .sidebar-nav { padding: 16px 0; }
+  .sidebar-nav a { display: block; padding: 8px 20px; font-size: 13px; color: var(--text2); text-decoration: none; transition: all .15s; }
+  .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--text); background: var(--surface2); border-left: 3px solid var(--accent); padding-left: 17px; }
+  .sidebar-nav .section-label { padding: 16px 20px 4px; font-size: 10px; color: var(--text2); letter-spacing: 1.5px; text-transform: uppercase; }
+
+  /* Header */
+  .page-header { margin-bottom: 32px; }
+  .page-header h1 { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-header .meta { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title .icon { font-size: 20px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .card .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; margin-bottom: 12px; }
+  .card .username { font-size: 15px; font-weight: 600; }
+  .card .bio { font-size: 12px; color: var(--text2); margin: 6px 0 12px; line-height: 1.4; }
+  .card .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card .stat { background: var(--surface2); border-radius: 8px; padding: 10px; text-align: center; }
+  .card .stat .val { font-size: 16px; font-weight: 700; color: var(--accent); }
+  .card .stat .lbl { font-size: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; }
+
+  /* Badge */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .badge-purple { background: rgba(124,106,247,.2); color: var(--accent); }
+  .badge-pink { background: rgba(240,98,146,.2); color: var(--accent2); }
+  .badge-teal { background: rgba(77,208,225,.2); color: var(--accent3); }
+  .badge-green { background: rgba(102,187,106,.2); color: var(--green); }
+
+  /* Chart containers */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .chart-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--text2); }
+  .chart-card canvas { max-height: 280px; }
+
+  /* Comparison table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--surface2); color: var(--text2); font-weight: 600; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: .5px; text-transform: uppercase; }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.02); }
+  .highlight { color: var(--accent); font-weight: 700; }
+
+  /* Top posts */
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .post-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .post-card .post-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .post-card .post-user { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .post-card .post-type { font-size: 11px; }
+  .post-card .post-caption { font-size: 12px; color: var(--text2); line-height: 1.5; margin-bottom: 12px; }
+  .post-card .post-stats { display: flex; gap: 16px; }
+  .post-card .post-stat { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+  .post-card .post-stat .num { font-weight: 700; }
+  .post-card a { font-size: 11px; color: var(--accent); text-decoration: none; }
+
+  /* Hashtag tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 12px; display: flex; align-items: center; gap: 6px; }
+  .tag .count { background: var(--accent); color: white; border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 700; }
+
+  /* Strategy (markdown) */
+  .strategy-body { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+  .strategy-body h2 { font-size: 16px; font-weight: 700; color: var(--accent); margin: 24px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .strategy-body h2:first-child { margin-top: 0; }
+  .strategy-body h3 { font-size: 14px; font-weight: 600; margin: 16px 0 8px; color: var(--accent2); }
+  .strategy-body p { font-size: 14px; color: var(--text2); margin-bottom: 12px; line-height: 1.7; }
+  .strategy-body ul, .strategy-body ol { padding-left: 20px; margin-bottom: 12px; }
+  .strategy-body li { font-size: 14px; color: var(--text2); margin-bottom: 6px; line-height: 1.6; }
+  .strategy-body strong { color: var(--text); }
+  .strategy-body em { color: var(--text2); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .chart-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <h2>📊 Instagram</h2>
+    <p>競合分析レポート</p>
+  </div>
+  <div class="sidebar-nav">
+    <div class="section-label">分析</div>
+    <a href="#overview">📋 アカウント概要</a>
+    <a href="#engagement">📈 エンゲージメント</a>
+    <a href="#comparison">🔍 比較テーブル</a>
+    <a href="#top-posts">⭐ 人気投稿</a>
+    <div class="section-label">詳細</div>
+    <a href="#hashtags">🏷️ ハッシュタグ</a>
+    <a href="#patterns">🕐 投稿パターン</a>
+    <div class="section-label">戦略</div>
+    <a href="#strategy">🤖 AI戦略提案</a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="page-header">
+    <h1>Instagram 競合分析レポート</h1>
+    <p class="meta">生成日時: {{ generated_at }} ・ 分析アカウント数: {{ accounts|length }}</p>
+  </div>
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <h2 class="section-title"><span class="icon">📋</span> アカウント概要</h2>
+    <div class="cards">
+      {% for acc in accounts %}
+      {% set colors = ['#7c6af7','#f06292','#4dd0e1','#66bb6a'] %}
+      <div class="card">
+        <div class="avatar" style="background: linear-gradient(135deg, {{ colors[loop.index0 % 4] }}, {{ colors[(loop.index0+1) % 4] }})">
+          {{ acc.username[0].upper() }}
+        </div>
+        <div class="username">@{{ acc.username }}</div>
+        <div class="bio">{{ acc.biography[:80] }}{% if acc.biography|length > 80 %}…{% endif %}</div>
+        <div class="stats">
+          <div class="stat">
+            <div class="val">{{ '{:,}'.format(acc.followers_count) }}</div>
+            <div class="lbl">フォロワー</div>
+          </div>
+          <div class="stat">
+            <div class="val">{{ acc.engagement_rate.average }}%</div>
+            <div class="lbl">ENG率</div>
+          </div>
+          <div class="stat">
+            <div class="val">{{ acc.media_count }}</div>
+            <div class="lbl">投稿数</div>
+          </div>
+          <div class="stat">
+            <div class="val">{{ acc.hashtags.total_unique }}</div>
+            <div class="lbl">ハッシュタグ</div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Engagement Charts -->
+  <section class="section" id="engagement">
+    <h2 class="section-title"><span class="icon">📈</span> エンゲージメント分析</h2>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>平均エンゲージメント率 (%)</h3>
+        <canvas id="engChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>フォロワー数比較</h3>
+        <canvas id="followerChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table -->
+  <section class="section" id="comparison">
+    <h2 class="section-title"><span class="icon">🔍</span> 比較テーブル</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>アカウント</th>
+            <th>フォロワー</th>
+            <th>ENG率</th>
+            <th>分析投稿数</th>
+            <th>ベスト投稿日</th>
+            <th>ベスト時間</th>
+            <th>トップタグ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for acc in accounts %}
+          <tr>
+            <td><strong>@{{ acc.username }}</strong>
+              {% if comparison.best_engagement == acc.username %}<br><span class="badge badge-purple">ENG No.1</span>{% endif %}
+              {% if comparison.most_followers == acc.username %}<br><span class="badge badge-pink">最多フォロワー</span>{% endif %}
+            </td>
+            <td>{{ '{:,}'.format(acc.followers_count) }}</td>
+            <td class="highlight">{{ acc.engagement_rate.average }}%</td>
+            <td>{{ acc.engagement_rate.total_posts }}</td>
+            <td>{{ acc.posting_patterns.best_day }}</td>
+            <td>{{ acc.posting_patterns.best_hour }}</td>
+            <td>
+              {% if acc.hashtags.top_hashtags %}
+              <span class="badge badge-teal">{{ acc.hashtags.top_hashtags[0].tag }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Top Posts -->
+  <section class="section" id="top-posts">
+    <h2 class="section-title"><span class="icon">⭐</span> 人気投稿 Top 5</h2>
+    <div class="posts-grid" id="topPostsGrid"></div>
+  </section>
+
+  <!-- Hashtags -->
+  <section class="section" id="hashtags">
+    <h2 class="section-title"><span class="icon">🏷️</span> ハッシュタグ分析</h2>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>使用頻度 Top 10（最初のアカウント）</h3>
+        <canvas id="hashtagChart"></canvas>
+      </div>
+      <div class="chart-card" style="align-content:start">
+        <h3>全アカウント トップハッシュタグ</h3>
+        {% for acc in accounts %}
+        <p style="font-size:12px;color:var(--text2);margin-bottom:8px;"><strong style="color:var(--text)">@{{ acc.username }}</strong></p>
+        <div class="tags" style="margin-bottom:16px;">
+          {% for h in acc.hashtags.top_hashtags[:8] %}
+          <span class="tag">#{{ h.tag.lstrip('#') }}<span class="count">{{ h.count }}</span></span>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Posting Patterns -->
+  <section class="section" id="patterns">
+    <h2 class="section-title"><span class="icon">🕐</span> 投稿パターン</h2>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3>曜日別投稿数（全アカウント合計）</h3>
+        <canvas id="dayChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>時間帯別投稿数（全アカウント合計）</h3>
+        <canvas id="hourChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Strategy -->
+  <section class="section" id="strategy">
+    <h2 class="section-title"><span class="icon">🤖</span> AI コンテンツ戦略提案</h2>
+    <div class="strategy-body" id="strategyBody"></div>
+  </section>
+
+</main>
+</div>
+
+<script>
+const chartData = {{ chart_data_json }};
+const strategy = {{ strategy | tojson }};
+
+// Chart defaults
+Chart.defaults.color = '#9494a8';
+Chart.defaults.borderColor = '#2e2e40';
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+const COLORS = ['#7c6af7','#f06292','#4dd0e1','#66bb6a','#ffa726'];
+
+function makeBar(id, labels, values, label, color) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label, data: values, backgroundColor: color || COLORS[0], borderRadius: 6 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { grid: { color: '#2e2e40' } }, x: { grid: { display: false } } } }
+  });
+}
+
+function makeHorizontalBar(id, labels, values, label) {
+  const colors = labels.map((_, i) => COLORS[i % COLORS.length]);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label, data: values, backgroundColor: colors, borderRadius: 4 }]
+    },
+    options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { grid: { color: '#2e2e40' } }, y: { grid: { display: false }, ticks: { font: { size: 11 } } } } }
+  });
+}
+
+// Engagement chart
+makeBar('engChart', chartData.engagement.labels, chartData.engagement.values, 'ENG率 (%)', COLORS[0]);
+
+// Followers chart (bar with different colors)
+new Chart(document.getElementById('followerChart'), {
+  type: 'doughnut',
+  data: {
+    labels: chartData.engagement.labels,
+    datasets: [{
+      data: {{ accounts | map(attribute='followers_count') | list | tojson }},
+      backgroundColor: COLORS,
+      borderWidth: 2,
+      borderColor: '#1a1a24'
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+});
+
+// Hashtag chart
+makeHorizontalBar('hashtagChart', chartData.hashtags.labels, chartData.hashtags.values, '使用回数');
+
+// Day chart
+makeBar('dayChart', chartData.posting_days.labels, chartData.posting_days.values, '投稿数', COLORS[2]);
+
+// Hour chart
+makeBar('hourChart', chartData.posting_hours.labels, chartData.posting_hours.values, '投稿数', COLORS[1]);
+
+// Top posts
+const grid = document.getElementById('topPostsGrid');
+const typeEmoji = { IMAGE: '🖼️', VIDEO: '🎬', CAROUSEL_ALBUM: '🎠' };
+chartData.top_posts.forEach(p => {
+  const div = document.createElement('div');
+  div.className = 'post-card';
+  div.innerHTML = `
+    <div class="post-meta">
+      <span class="post-user">@${p.username}</span>
+      <span class="post-type">${typeEmoji[p.media_type] || '📸'} ${p.media_type}</span>
+    </div>
+    <div class="post-caption">${p.caption_preview || '(キャプションなし)'}</div>
+    <div class="post-stats">
+      <div class="post-stat">❤️ <span class="num">${p.likes.toLocaleString()}</span></div>
+      <div class="post-stat">💬 <span class="num">${p.comments.toLocaleString()}</span></div>
+      <div class="post-stat">📊 <span class="num">${p.engagement.toLocaleString()}</span></div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text2)">${p.timestamp}</div>
+  `;
+  grid.appendChild(div);
+});
+
+// Strategy markdown
+document.getElementById('strategyBody').innerHTML = marked.parse(strategy);
+</script>
+</body>
+</html>
