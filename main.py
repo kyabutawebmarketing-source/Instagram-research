@@ -2,6 +2,7 @@
 
 import argparse
 import os
+import re
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -247,6 +248,162 @@ def cmd_analyze(args: argparse.Namespace) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Influencer analysis (genre-based discovery)
+# ---------------------------------------------------------------------------
+
+def _build_influencer_record(
+    username: str,
+    name: str,
+    biography: str,
+    followers_count: int,
+    media_count: int,
+    media: list[dict],
+) -> dict:
+    """Run all influencer-specific analysis steps for a single account."""
+    from src import influencer_analyzer, snapshot_store
+    from src.analyzer import calculate_engagement_rate
+
+    engagement = calculate_engagement_rate(media, followers_count)
+    pr_rate = influencer_analyzer.calculate_pr_rate(media, months=3)
+
+    hashtags = []
+    for post in media:
+        hashtags.extend(re.findall(r"#(\w+)", (post.get("caption") or "").lower()))
+    genre = influencer_analyzer.classify_genre(biography, hashtags)
+
+    snapshot_store.record_snapshot(
+        username, followers_count, engagement["average"], pr_rate["pr_rate"]
+    )
+    trends = influencer_analyzer.build_trends(username, media, followers_count, months=3)
+
+    return {
+        "username": username,
+        "name": name or username,
+        "biography": biography,
+        "followers_count": followers_count,
+        "media_count": media_count,
+        "engagement_rate": engagement,
+        "pr_rate": pr_rate,
+        "genre": genre,
+        "trends": trends,
+        "influencer_demographics": influencer_analyzer.estimate_demographics(username, "influencer"),
+        "audience_demographics": influencer_analyzer.estimate_demographics(username, "audience"),
+    }
+
+
+def cmd_influencer_demo(args: argparse.Namespace) -> None:
+    """Generate a demo influencer report for a genre using mock accounts."""
+    print(f"Generating demo influencer report for genre '{args.genre}'...")
+
+    from src.report_generator import generate_influencer_report
+
+    accounts_cfg = [
+        {"username": "fitlife_official", "name": "FitLife Official", "followers": 285_000, "seed": 0},
+        {"username": "healthyhustle", "name": "Healthy Hustle", "followers": 142_500, "seed": 1},
+        {"username": "wellnesswave", "name": "Wellness Wave", "followers": 67_300, "seed": 2},
+    ]
+
+    influencers = []
+    for cfg in accounts_cfg:
+        media = _mock_media(cfg["seed"], cfg["followers"])
+        record = _build_influencer_record(
+            username=cfg["username"],
+            name=cfg["name"],
+            biography=f"Official account for {cfg['name']}. Inspiring millions daily. #{args.genre}",
+            followers_count=cfg["followers"],
+            media_count=500 + cfg["seed"] * 120,
+            media=media,
+        )
+        influencers.append(record)
+
+    data = {
+        "genre": args.genre,
+        "influencers": influencers,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+
+    output = args.output or "influencer_report.html"
+    path = generate_influencer_report(data, output_path=output)
+    print(f"\nReport generated: {path}")
+
+
+def cmd_influencer(args: argparse.Namespace) -> None:
+    """Discover and analyze real influencers in a genre via Apify."""
+    from src.apify_client import ApifyAPIError, ApifyClient
+    from src.report_generator import generate_influencer_report
+
+    api_token = args.apify_token or os.environ.get("APIFY_API_TOKEN", "")
+    if not api_token:
+        print("Error: Apify API token required. Use --apify-token or set APIFY_API_TOKEN.")
+        sys.exit(1)
+
+    client = ApifyClient(api_token)
+
+    usernames = list(args.username or [])
+    if not usernames:
+        print(f"Discovering influencers for genre '{args.genre}' via Apify...")
+        try:
+            candidates = client.discover_by_hashtag(args.genre, limit=args.limit)
+        except ApifyAPIError as exc:
+            print(f"Error: discovery failed: {exc}")
+            sys.exit(1)
+        usernames = [c["username"] for c in candidates]
+
+    if not usernames:
+        print("No candidate influencers found. Exiting.")
+        sys.exit(1)
+
+    print(f"Fetching profile + posts for {len(usernames)} account(s)...")
+    try:
+        profiles = client.fetch_profiles(usernames, posts_per_profile=args.posts)
+    except ApifyAPIError as exc:
+        print(f"Error: profile fetch failed: {exc}")
+        sys.exit(1)
+
+    influencers = []
+    for profile in profiles:
+        username = profile.get("username") or profile.get("ownerUsername") or ""
+        if not username:
+            continue
+        followers_count = profile.get("followersCount", 0) or 0
+        media_count = profile.get("postsCount", 0) or 0
+        biography = profile.get("biography", "") or ""
+        name = profile.get("fullName", "") or username
+
+        raw_posts = profile.get("latestPosts") or profile.get("posts") or []
+        media = [
+            {
+                "id": p.get("id", ""),
+                "timestamp": p.get("timestamp", "") or p.get("takenAtTimestamp", ""),
+                "media_type": p.get("type", "IMAGE"),
+                "caption": p.get("caption", "") or "",
+                "like_count": p.get("likesCount", 0) or 0,
+                "comments_count": p.get("commentsCount", 0) or 0,
+            }
+            for p in raw_posts
+        ]
+
+        record = _build_influencer_record(
+            username, name, biography, followers_count, media_count, media
+        )
+        influencers.append(record)
+
+    if not influencers:
+        print("No influencer data could be analyzed. Exiting.")
+        sys.exit(1)
+
+    data = {
+        "genre": args.genre,
+        "influencers": influencers,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+
+    output = args.output or "influencer_report.html"
+    path = generate_influencer_report(data, output_path=output)
+    print(f"\nReport generated: {path}")
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -313,6 +470,27 @@ def build_parser() -> argparse.ArgumentParser:
     analyze_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
     analyze_parser.add_argument("--output", "-o", default="report.html", help="Output HTML file path")
 
+    # influencer-demo
+    inf_demo_parser = subparsers.add_parser(
+        "influencer-demo", help="Generate a demo influencer report for a genre (mock data)"
+    )
+    inf_demo_parser.add_argument("--genre", "-g", default="fitness", help="Target genre/keyword")
+    inf_demo_parser.add_argument("--output", "-o", default="influencer_report.html", help="Output HTML file path")
+
+    # influencer
+    inf_parser = subparsers.add_parser(
+        "influencer", help="Discover and analyze real influencers in a genre via Apify"
+    )
+    inf_parser.add_argument("--genre", "-g", required=True, help="Genre/hashtag keyword to discover influencers")
+    inf_parser.add_argument(
+        "--username", "-u", action="append", metavar="USERNAME",
+        help="Specific username to analyze (skips discovery; can be repeated)",
+    )
+    inf_parser.add_argument("--limit", type=int, default=10, help="Max number of influencers to discover")
+    inf_parser.add_argument("--posts", type=int, default=30, help="Posts per profile to fetch")
+    inf_parser.add_argument("--apify-token", help="Apify API token")
+    inf_parser.add_argument("--output", "-o", default="influencer_report.html", help="Output HTML file path")
+
     return parser
 
 
@@ -324,6 +502,10 @@ def main() -> None:
         cmd_demo(args)
     elif args.command == "analyze":
         cmd_analyze(args)
+    elif args.command == "influencer-demo":
+        cmd_influencer_demo(args)
+    elif args.command == "influencer":
+        cmd_influencer(args)
     else:
         parser.print_help()
         sys.exit(1)

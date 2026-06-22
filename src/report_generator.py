@@ -138,3 +138,43 @@ def _build_chart_data(data: dict[str, Any]) -> dict:
         "posting_hours": {"labels": hour_labels, "values": hour_values},
         "top_posts": top_posts_data,
     }
+
+
+def generate_influencer_report(
+    data: dict[str, Any],
+    output_path: str = "influencer_report.html",
+    template_dir: str | None = None,
+) -> str:
+    """Render and write the influencer analysis HTML report.
+
+    Parameters
+    ----------
+    data:
+        Dict with keys: genre, influencers (list of influencer dicts).
+    """
+    if Environment is None:
+        raise ReportGenerationError(
+            "Jinja2 is not installed. Run: pip install jinja2"
+        )
+
+    if template_dir is None:
+        template_dir = str(Path(__file__).parent.parent / "templates")
+
+    env = Environment(
+        loader=FileSystemLoader(template_dir),
+        autoescape=select_autoescape(["html"]),
+    )
+
+    template = env.get_template("influencer_report.html")
+
+    html = template.render(
+        genre=data.get("genre", ""),
+        influencers=data.get("influencers", []),
+        generated_at=data.get("generated_at", datetime.now().strftime("%Y-%m-%d %H:%M")),
+        influencers_json=json.dumps(data.get("influencers", []), default=_serialize),
+    )
+
+    out = Path(output_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(html, encoding="utf-8")
+    return str(out.resolve())
