@@ -121,8 +121,7 @@ class ApifyInstagramClient:
         """
         tag = hashtag.lstrip("#")
         run_input = {
-            "search": tag,
-            "searchType": "hashtag",
+            "directUrls": [f"https://www.instagram.com/explore/tags/{tag}/"],
             "resultsType": "posts",
             "resultsLimit": limit,
         }
