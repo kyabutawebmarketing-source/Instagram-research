@@ -298,9 +298,9 @@ def cmd_influencer_demo(args: argparse.Namespace) -> None:
     from src.report_generator import generate_influencer_report
 
     accounts_cfg = [
-        {"username": "fitlife_official", "name": "FitLife Official", "followers": 285_000, "seed": 0},
-        {"username": "healthyhustle", "name": "Healthy Hustle", "followers": 142_500, "seed": 1},
-        {"username": "wellnesswave", "name": "Wellness Wave", "followers": 67_300, "seed": 2},
+        {"username": "fitlife_tokyo", "name": "美咲 / FitLife Tokyo", "followers": 285_000, "seed": 0},
+        {"username": "healthy_hustle_jp", "name": "健太 / Healthy Hustle JP", "followers": 142_500, "seed": 1},
+        {"username": "wellness_osaka", "name": "ゆかり / Wellness Osaka", "followers": 67_300, "seed": 2},
     ]
 
     influencers = []
@@ -309,7 +309,7 @@ def cmd_influencer_demo(args: argparse.Namespace) -> None:
         record = _build_influencer_record(
             username=cfg["username"],
             name=cfg["name"],
-            biography=f"Official account for {cfg['name']}. Inspiring millions daily. #{args.genre}",
+            biography=f"{cfg['name']}の公式アカウントです。日本各地で #{args.genre} の発信をしています。",
             followers_count=cfg["followers"],
             media_count=500 + cfg["seed"] * 120,
             media=media,
@@ -341,13 +341,25 @@ def cmd_influencer(args: argparse.Namespace) -> None:
 
     usernames = list(args.username or [])
     if not usernames:
+        hashtags_to_try = [args.genre]
+        if not args.no_region_filter:
+            # Bias discovery toward Japan-tagged posts so the later
+            # is_japan_based() filter doesn't discard most candidates.
+            hashtags_to_try = [f"{args.genre}japan", args.genre]
+
         print(f"Discovering influencers for genre '{args.genre}' via Apify...")
-        try:
-            candidates = client.discover_by_hashtag(args.genre, limit=args.limit)
-        except ApifyAPIError as exc:
-            print(f"Error: discovery failed: {exc}")
-            sys.exit(1)
-        usernames = [c["username"] for c in candidates]
+        seen: set[str] = set()
+        for tag in hashtags_to_try:
+            try:
+                candidates = client.discover_by_hashtag(tag, limit=args.limit)
+            except ApifyAPIError as exc:
+                print(f"  Warning: discovery for #{tag} failed: {exc}")
+                continue
+            for c in candidates:
+                seen.add(c["username"])
+            if len(seen) >= args.limit:
+                break
+        usernames = list(seen)[: args.limit]
 
     if not usernames:
         print("No candidate influencers found. Exiting.")
@@ -360,7 +372,10 @@ def cmd_influencer(args: argparse.Namespace) -> None:
         print(f"Error: profile fetch failed: {exc}")
         sys.exit(1)
 
+    from src import influencer_analyzer
+
     influencers = []
+    skipped_non_japan = 0
     for profile in profiles:
         username = profile.get("username") or profile.get("ownerUsername") or ""
         if not username:
@@ -382,14 +397,24 @@ def cmd_influencer(args: argparse.Namespace) -> None:
             }
             for p in raw_posts
         ]
+        locations = [p.get("locationName", "") for p in raw_posts if p.get("locationName")]
+
+        if not args.no_region_filter and not influencer_analyzer.is_japan_based(
+            biography, name, locations
+        ):
+            skipped_non_japan += 1
+            continue
 
         record = _build_influencer_record(
             username, name, biography, followers_count, media_count, media
         )
         influencers.append(record)
 
+    if skipped_non_japan:
+        print(f"Skipped {skipped_non_japan} non-Japan-based account(s) (bio/location heuristic).")
+
     if not influencers:
-        print("No influencer data could be analyzed. Exiting.")
+        print("No influencer data could be analyzed (after Japan-region filtering). Exiting.")
         sys.exit(1)
 
     data = {
@@ -488,6 +513,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     inf_parser.add_argument("--limit", type=int, default=10, help="Max number of influencers to discover")
     inf_parser.add_argument("--posts", type=int, default=30, help="Posts per profile to fetch")
+    inf_parser.add_argument(
+        "--no-region-filter", action="store_true",
+        help="Disable the Japan-based heuristic filter (default: Japan only)",
+    )
     inf_parser.add_argument("--apify-token", help="Apify API token")
     inf_parser.add_argument("--output", "-o", default="influencer_report.html", help="Output HTML file path")
 

@@ -32,6 +32,38 @@ GENRE_HASHTAG_MAP: dict[str, list[str]] = {
 }
 
 
+JAPAN_LOCATION_KEYWORDS = [
+    "japan", "tokyo", "osaka", "kyoto", "yokohama", "nagoya", "fukuoka",
+    "sapporo", "kobe", "okinawa", "日本", "東京", "大阪", "京都", "横浜",
+    "名古屋", "福岡", "札幌", "神戸", "沖縄",
+]
+
+_JAPANESE_CHAR_RE = re.compile(
+    r"[぀-ゟ゠-ヿ一-鿿]"  # hiragana, katakana, kanji
+)
+
+
+def is_japan_based(biography: str = "", full_name: str = "", locations: list[str] | None = None) -> bool:
+    """Best-effort heuristic for whether an account is Japan-based.
+
+    Public Instagram data has no country field, so this combines two
+    signals: Japanese-script text in the bio/name, and any tagged post
+    location matching a known Japanese place name. Either signal alone
+    is treated as sufficient (false positives are preferred over
+    silently dropping genuine Japanese accounts).
+    """
+    text = f"{biography or ''} {full_name or ''}"
+    if _JAPANESE_CHAR_RE.search(text):
+        return True
+
+    for loc in (locations or []):
+        loc_lower = (loc or "").lower()
+        if any(kw in loc_lower for kw in JAPAN_LOCATION_KEYWORDS):
+            return True
+
+    return False
+
+
 def detect_pr_posts(media_list: list[dict]) -> list[dict]:
     """Flag posts whose caption contains a sponsorship/PR marker."""
     flagged = []
