@@ -339,15 +339,18 @@ def cmd_influencer(args: argparse.Namespace) -> None:
 
     client = ApifyClient(api_token)
 
+    from src import influencer_analyzer
+    base_tag = influencer_analyzer.discovery_tag_for_category(args.genre)
+
     usernames = list(args.username or [])
     if not usernames:
-        hashtags_to_try = [args.genre]
+        hashtags_to_try = [base_tag]
         if not args.no_region_filter:
             # Bias discovery toward Japan-tagged posts so the later
             # is_japan_based() filter doesn't discard most candidates.
-            hashtags_to_try = [f"{args.genre}japan", args.genre]
+            hashtags_to_try = [f"{base_tag}japan", base_tag]
 
-        print(f"Discovering influencers for genre '{args.genre}' via Apify...")
+        print(f"Discovering influencers for category '{args.genre}' via Apify (tag: #{base_tag})...")
         seen: set[str] = set()
         for tag in hashtags_to_try:
             try:
@@ -371,8 +374,6 @@ def cmd_influencer(args: argparse.Namespace) -> None:
     except ApifyAPIError as exc:
         print(f"Error: profile fetch failed: {exc}")
         sys.exit(1)
-
-    from src import influencer_analyzer
 
     influencers = []
     skipped_non_japan = 0
@@ -495,18 +496,24 @@ def build_parser() -> argparse.ArgumentParser:
     analyze_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
     analyze_parser.add_argument("--output", "-o", default="report.html", help="Output HTML file path")
 
+    from src.influencer_analyzer import CATEGORIES
+
     # influencer-demo
     inf_demo_parser = subparsers.add_parser(
-        "influencer-demo", help="Generate a demo influencer report for a genre (mock data)"
+        "influencer-demo", help="Generate a demo influencer report for a category (mock data)"
     )
-    inf_demo_parser.add_argument("--genre", "-g", default="fitness", help="Target genre/keyword")
+    inf_demo_parser.add_argument(
+        "--genre", "-g", choices=CATEGORIES, default=CATEGORIES[3], help="Target influencer category"
+    )
     inf_demo_parser.add_argument("--output", "-o", default="influencer_report.html", help="Output HTML file path")
 
     # influencer
     inf_parser = subparsers.add_parser(
-        "influencer", help="Discover and analyze real influencers in a genre via Apify"
+        "influencer", help="Discover and analyze real influencers in a category via Apify"
     )
-    inf_parser.add_argument("--genre", "-g", required=True, help="Genre/hashtag keyword to discover influencers")
+    inf_parser.add_argument(
+        "--genre", "-g", choices=CATEGORIES, required=True, help="Influencer category to discover"
+    )
     inf_parser.add_argument(
         "--username", "-u", action="append", metavar="USERNAME",
         help="Specific username to analyze (skips discovery; can be repeated)",

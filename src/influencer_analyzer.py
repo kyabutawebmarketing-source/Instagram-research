@@ -20,16 +20,31 @@ PR_MARKERS = [
     "paid partnership", "ad:", "sponsored by",
 ]
 
-GENRE_HASHTAG_MAP: dict[str, list[str]] = {
-    "フィットネス": ["fitness", "workout", "gym", "training", "bodybuilding", "crossfit"],
-    "美容": ["beauty", "makeup", "skincare", "cosmetics", "コスメ", "美容"],
-    "ファッション": ["fashion", "ootd", "style", "outfit", "コーデ", "ファッション"],
-    "グルメ": ["food", "foodie", "instafood", "recipe", "グルメ", "ごはん"],
-    "旅行": ["travel", "wanderlust", "trip", "旅行", "旅"],
-    "ライフスタイル": ["lifestyle", "daily", "日常", "暮らし"],
-    "ゲーム": ["gaming", "gamer", "esports", "ゲーム実況"],
-    "育児": ["parenting", "mom", "baby", "育児", "ママ"],
+# Fixed set of supported influencer categories. Each entry lists the
+# hashtags (Japanese + English) used both for genre classification and
+# for biasing Apify hashtag discovery toward that category.
+CATEGORY_HASHTAGS: dict[str, list[str]] = {
+    "美容・コスメ": ["美容", "コスメ", "スキンケア", "beauty", "cosmetics", "skincare", "makeup"],
+    "ファッション": ["ファッション", "コーデ", "おしゃれ", "fashion", "ootd", "style", "outfit"],
+    "子育て・ベビー": ["子育て", "ベビー", "育児", "ママ", "baby", "parenting", "mom"],
+    "ダイエット・フィットネス": ["ダイエット", "フィットネス", "筋トレ", "diet", "fitness", "workout", "gym"],
+    "旅行": ["旅行", "旅", "trip", "travel", "wanderlust"],
+    "プレゼント": ["プレゼント", "懸賞", "キャンペーン", "giveaway", "present"],
+    "ペット": ["ペット", "犬", "猫", "いぬ", "ねこ", "pet", "dog", "cat"],
 }
+
+CATEGORIES: list[str] = list(CATEGORY_HASHTAGS.keys())
+
+# Backwards-compatible alias used by classify_genre().
+GENRE_HASHTAG_MAP = CATEGORY_HASHTAGS
+
+
+def discovery_tag_for_category(category: str) -> str:
+    """Pick a representative hashtag to seed Apify discovery for a category."""
+    tags = CATEGORY_HASHTAGS.get(category)
+    if not tags:
+        raise ValueError(f"Unknown category: {category}")
+    return tags[0]
 
 
 JAPAN_LOCATION_KEYWORDS = [

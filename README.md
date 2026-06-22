@@ -30,22 +30,32 @@ python main.py analyze \
   --user-id YOUR_USER_ID
 ```
 
+対応カテゴリ（`--genre`/`-g` で指定、以下のいずれか固定）：
+
+- 美容・コスメ
+- ファッション
+- 子育て・ベビー
+- ダイエット・フィットネス
+- 旅行
+- プレゼント
+- ペット
+
 ### インフルエンサー分析: デモモード（APIキー不要）
 
 ```bash
-python main.py influencer-demo --genre fitness
+python main.py influencer-demo --genre "ダイエット・フィットネス"
 ```
 
 `influencer_report.html` を生成します。
 
-### インフルエンサー分析: ジャンル指定で実データを分析（Apify連携）
+### インフルエンサー分析: カテゴリ指定で実データを分析（Apify連携）
 
-ジャンル別のインフルエンサー検索・フォロワー数・投稿データはInstagram公式APIでは取得できないため、[Apify](https://apify.com/) のInstagramスクレイパーを利用します。`APIFY_API_TOKEN` を設定してください。
+カテゴリ別のインフルエンサー検索・フォロワー数・投稿データはInstagram公式APIでは取得できないため、[Apify](https://apify.com/) のInstagramスクレイパーを利用します。`APIFY_API_TOKEN` を設定してください。
 
 ```bash
-python main.py influencer --genre fitness --limit 10
+python main.py influencer --genre "美容・コスメ" --limit 10
 # 特定ユーザーを直接指定する場合
-python main.py influencer --genre fitness --username someuser --username otheruser
+python main.py influencer --genre "美容・コスメ" --username someuser --username otheruser
 ```
 
 取得・算出される項目：
