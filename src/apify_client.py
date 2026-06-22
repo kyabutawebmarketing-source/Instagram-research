@@ -93,13 +93,57 @@ class ApifyInstagramClient:
         items = self._run_actor(run_input)
         if not items:
             raise ApifyAPIError(f"No data returned for @{username}")
+        return self._profile_from_raw(items[0], post_limit)
 
-        raw = items[0]
+    def get_profiles_bulk(self, usernames: list[str], post_limit: int = 50) -> list[dict]:
+        """Fetch multiple public profiles in a single actor run.
+
+        Returns a list of profile dicts in the same shape as get_profile.
+        Usernames that fail to resolve are silently skipped.
+        """
+        if not usernames:
+            return []
+
+        run_input = {
+            "directUrls": [f"https://www.instagram.com/{u}/" for u in usernames],
+            "resultsType": "details",
+            "resultsLimit": post_limit,
+        }
+        items = self._run_actor(run_input)
+        return [self._profile_from_raw(raw, post_limit) for raw in items if raw.get("username")]
+
+    def discover_usernames_by_hashtag(self, hashtag: str, limit: int = 50) -> list[dict]:
+        """Search recent posts under a hashtag and return unique post authors.
+
+        Returns a list of dicts with: username, followers_count (0 — not
+        known yet at this stage), used as discovery candidates before a
+        full profile fetch.
+        """
+        tag = hashtag.lstrip("#")
+        run_input = {
+            "search": tag,
+            "searchType": "hashtag",
+            "resultsType": "posts",
+            "resultsLimit": limit,
+        }
+        items = self._run_actor(run_input)
+
+        seen: dict[str, dict] = {}
+        for item in items:
+            username = item.get("ownerUsername")
+            if not username or username in seen:
+                continue
+            seen[username] = {"username": username, "owner_id": item.get("ownerId", "")}
+        return list(seen.values())
+
+    def _profile_from_raw(self, raw: dict, post_limit: int) -> dict:
+        """Normalize a raw 'details' actor item into the analyzer's profile shape."""
+        username = raw.get("username", "")
         media_raw = raw.get("latestPosts", []) or raw.get("posts", []) or []
         return {
             "id": str(raw.get("id", username)),
             "name": raw.get("fullName", "") or username,
-            "username": raw.get("username", username),
+            "username": username,
             "followers_count": raw.get("followersCount", 0) or 0,
             "media_count": raw.get("postsCount", 0) or 0,
             "biography": raw.get("biography", "") or "",

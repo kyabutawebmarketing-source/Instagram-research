@@ -43,6 +43,28 @@ python main.py analyze-influencer \
 
 `APIFY_API_TOKEN` を `.env` に設定しておけば `--apify-token` は省略可能です。`--post-limit` で取得する投稿数を調整できます（デフォルト50件）。
 
+### カテゴリ別インフルエンサー一括分析
+
+ハッシュタグからカテゴリごとにインフルエンサーを発掘し、フォロワー数でソートして上位N件だけを分析します。カテゴリごとに `reports/report_<category>.html` を生成します。
+
+```bash
+python main.py analyze-category
+```
+
+対応カテゴリ：`beauty`（美容・コスメ）, `fashion`（ファッション）, `parenting`（子育て・ベビー）, `fitness`（ダイエット・フィットネス）, `travel`（旅行）, `gift`（プレゼント）, `pet`（ペット）
+
+特定カテゴリのみ実行する場合：
+
+```bash
+python main.py analyze-category --category beauty --category fashion
+```
+
+候補数・分析対象数は調整可能です（デフォルト：候補50件→上位10件）：
+
+```bash
+python main.py analyze-category --candidate-limit 50 --top-n 10
+```
+
 ## ファイル構成
 
 ```
@@ -51,7 +73,8 @@ python main.py analyze-influencer \
 ├── .env.example
 ├── src/
 │   ├── instagram_client.py  # Instagram Graph API クライアント
-│   ├── apify_client.py      # Apify Instagram Scraper クライアント（インフルエンサー分析用）
+│   ├── apify_client.py      # Apify Instagram Scraper クライアント（インフルエンサー分析・カテゴリ発掘用）
+│   ├── categories.py        # カテゴリ → ハッシュタグ マッピング
 │   ├── analyzer.py          # エンゲージメント・ハッシュタグ分析
 │   ├── ai_strategy.py       # Claude AI による戦略生成
 │   └── report_generator.py  # HTMLレポート生成

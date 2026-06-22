@@ -333,6 +333,119 @@ def cmd_analyze_influencer(args: argparse.Namespace) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Analyze-category command — discover influencers by category, sort by
+# follower count, and analyze the top N per category.
+# ---------------------------------------------------------------------------
+
+def _profiles_to_accounts(profiles: list[dict]) -> list[dict]:
+    """Run engagement/hashtag/posting-pattern analysis over a list of raw profiles."""
+    from src.analyzer import (
+        analyze_hashtags,
+        analyze_posting_patterns,
+        calculate_engagement_rate,
+        get_top_posts,
+    )
+
+    accounts = []
+    for profile in profiles:
+        media = profile.get("media", [])
+        followers = profile.get("followers_count", 1)
+        accounts.append({
+            **profile,
+            "engagement_rate": calculate_engagement_rate(media, followers),
+            "hashtags": analyze_hashtags(media),
+            "posting_patterns": analyze_posting_patterns(media),
+            "top_posts": get_top_posts(media, n=5),
+        })
+    return accounts
+
+
+def cmd_analyze_category(args: argparse.Namespace) -> None:
+    """Discover influencers per category via hashtags, sort by followers,
+    and analyze the top N for each category."""
+    from src.analyzer import compare_accounts
+    from src.apify_client import ApifyAPIError, ApifyInstagramClient
+    from src.categories import CATEGORY_HASHTAGS, CATEGORY_LABELS_JA
+    from src.report_generator import generate_html_report
+
+    apify_token = args.apify_token or os.environ.get("APIFY_API_TOKEN", "")
+    if not apify_token:
+        print("Error: Apify API token required. Use --apify-token or set APIFY_API_TOKEN.")
+        sys.exit(1)
+
+    categories = args.category or list(CATEGORY_HASHTAGS.keys())
+    unknown = [c for c in categories if c not in CATEGORY_HASHTAGS]
+    if unknown:
+        print(f"Error: Unknown category(ies): {', '.join(unknown)}. "
+              f"Valid options: {', '.join(CATEGORY_HASHTAGS.keys())}")
+        sys.exit(1)
+
+    client = ApifyInstagramClient(api_token=apify_token)
+    anthropic_key = getattr(args, "anthropic_key", None) or os.environ.get("ANTHROPIC_API_KEY", "")
+    output_dir = Path(args.output_dir or "reports")
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for category in categories:
+        label = CATEGORY_LABELS_JA.get(category, category)
+        print(f"\n=== {label} ({category}) ===")
+
+        hashtag = CATEGORY_HASHTAGS[category][0]
+        print(f"Discovering candidates via #{hashtag} (up to {args.candidate_limit})...")
+        try:
+            candidates = client.discover_usernames_by_hashtag(hashtag, limit=args.candidate_limit)
+        except ApifyAPIError as exc:
+            print(f"  Warning: Discovery failed for {category}: {exc}")
+            continue
+
+        usernames = [c["username"] for c in candidates]
+        if not usernames:
+            print(f"  No candidates found for {category}. Skipping.")
+            continue
+        print(f"  Found {len(usernames)} unique candidate accounts.")
+
+        print("  Fetching follower counts for candidates...")
+        try:
+            profiles = client.get_profiles_bulk(usernames, post_limit=args.post_limit)
+        except ApifyAPIError as exc:
+            print(f"  Warning: Could not fetch profiles for {category}: {exc}")
+            continue
+
+        profiles.sort(key=lambda p: p.get("followers_count", 0), reverse=True)
+        top_profiles = profiles[: args.top_n]
+        print(f"  Analyzing top {len(top_profiles)} by follower count: "
+              f"{', '.join('@' + p['username'] for p in top_profiles)}")
+
+        accounts = _profiles_to_accounts(top_profiles)
+        comparison = compare_accounts(accounts)
+
+        strategy = ""
+        if anthropic_key:
+            print("  Generating AI strategy via Claude...")
+            try:
+                from src.ai_strategy import generate_strategy
+                strategy = generate_strategy(
+                    {"accounts": accounts, "comparison": comparison},
+                    api_key=anthropic_key,
+                )
+            except Exception as exc:  # noqa: BLE001
+                print(f"  Warning: AI strategy generation failed: {exc}")
+                strategy = _placeholder_strategy()
+        else:
+            strategy = _placeholder_strategy()
+
+        data = {
+            "accounts": accounts,
+            "comparison": comparison,
+            "strategy": strategy,
+            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        }
+
+        report_path = output_dir / f"report_{category}.html"
+        path = generate_html_report(data, output_path=str(report_path))
+        print(f"  Report generated: {path}")
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -415,6 +528,26 @@ def build_parser() -> argparse.ArgumentParser:
     influencer_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
     influencer_parser.add_argument("--output", "-o", default="report.html", help="Output HTML file path")
 
+    # analyze-category
+    from src.categories import CATEGORY_HASHTAGS
+
+    category_parser = subparsers.add_parser(
+        "analyze-category",
+        help="Discover influencers per category via hashtags, sort by followers, and analyze the top N",
+    )
+    category_parser.add_argument(
+        "--category", "-c",
+        action="append",
+        choices=list(CATEGORY_HASHTAGS.keys()),
+        help="Category to analyze (can be repeated). Defaults to all categories.",
+    )
+    category_parser.add_argument("--apify-token", help="Apify API token")
+    category_parser.add_argument("--candidate-limit", type=int, default=50, help="Number of candidates to discover per category")
+    category_parser.add_argument("--top-n", type=int, default=10, help="Number of top accounts (by followers) to analyze per category")
+    category_parser.add_argument("--post-limit", type=int, default=50, help="Number of recent posts to fetch per account")
+    category_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
+    category_parser.add_argument("--output-dir", default="reports", help="Directory for per-category HTML reports")
+
     return parser
 
 
@@ -428,6 +561,8 @@ def main() -> None:
         cmd_analyze(args)
     elif args.command == "analyze-influencer":
         cmd_analyze_influencer(args)
+    elif args.command == "analyze-category":
+        cmd_analyze_category(args)
     else:
         parser.print_help()
         sys.exit(1)
