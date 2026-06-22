@@ -30,6 +30,19 @@ python main.py analyze \
   --user-id YOUR_USER_ID
 ```
 
+### インフルエンサー分析（Apify、Graph APIの認可不要）
+
+公式アカウントの認可なしで、任意の公開インフルエンサーアカウントを分析できます。Apifyの Instagram Scraper アクターを使ってプロフィール・投稿データを取得します。
+
+```bash
+python main.py analyze-influencer \
+  --username influencer1 \
+  --username influencer2 \
+  --apify-token YOUR_APIFY_API_TOKEN
+```
+
+`APIFY_API_TOKEN` を `.env` に設定しておけば `--apify-token` は省略可能です。`--post-limit` で取得する投稿数を調整できます（デフォルト50件）。
+
 ## ファイル構成
 
 ```
@@ -38,6 +51,7 @@ python main.py analyze \
 ├── .env.example
 ├── src/
 │   ├── instagram_client.py  # Instagram Graph API クライアント
+│   ├── apify_client.py      # Apify Instagram Scraper クライアント（インフルエンサー分析用）
 │   ├── analyzer.py          # エンゲージメント・ハッシュタグ分析
 │   ├── ai_strategy.py       # Claude AI による戦略生成
 │   └── report_generator.py  # HTMLレポート生成

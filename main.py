@@ -247,6 +247,92 @@ def cmd_analyze(args: argparse.Namespace) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Analyze-influencer command (Apify-backed, no Graph API auth required)
+# ---------------------------------------------------------------------------
+
+def cmd_analyze_influencer(args: argparse.Namespace) -> None:
+    """Fetch public influencer data via Apify and generate a report."""
+    from src.analyzer import compare_accounts
+    from src.apify_client import ApifyAPIError, ApifyInstagramClient
+    from src.report_generator import generate_html_report
+
+    apify_token = args.apify_token or os.environ.get("APIFY_API_TOKEN", "")
+    if not apify_token:
+        print("Error: Apify API token required. Use --apify-token or set APIFY_API_TOKEN.")
+        sys.exit(1)
+    if not args.username:
+        print("Error: At least one --username required.")
+        sys.exit(1)
+
+    client = ApifyInstagramClient(api_token=apify_token)
+
+    from src.analyzer import (
+        analyze_hashtags,
+        analyze_posting_patterns,
+        calculate_engagement_rate,
+        get_top_posts,
+    )
+
+    accounts = []
+    for uname in args.username:
+        print(f"Fetching data for @{uname} via Apify...")
+        try:
+            profile = client.get_profile(uname, post_limit=args.post_limit)
+        except ApifyAPIError as exc:
+            print(f"  Warning: Could not fetch @{uname}: {exc}")
+            continue
+
+        media = profile.get("media", [])
+        followers = profile.get("followers_count", 1)
+        engagement = calculate_engagement_rate(media, followers)
+        hashtags = analyze_hashtags(media)
+        patterns = analyze_posting_patterns(media)
+        top = get_top_posts(media, n=5)
+
+        accounts.append({
+            **profile,
+            "engagement_rate": engagement,
+            "hashtags": hashtags,
+            "posting_patterns": patterns,
+            "top_posts": top,
+        })
+
+    if not accounts:
+        print("No account data fetched. Exiting.")
+        sys.exit(1)
+
+    comparison = compare_accounts(accounts)
+
+    strategy = ""
+    anthropic_key = getattr(args, "anthropic_key", None) or os.environ.get("ANTHROPIC_API_KEY", "")
+    if anthropic_key:
+        print("Generating AI strategy via Claude...")
+        try:
+            from src.ai_strategy import generate_strategy
+            strategy = generate_strategy(
+                {"accounts": accounts, "comparison": comparison},
+                api_key=anthropic_key,
+            )
+        except Exception as exc:  # noqa: BLE001
+            print(f"Warning: AI strategy generation failed: {exc}")
+            strategy = _placeholder_strategy()
+    else:
+        print("No ANTHROPIC_API_KEY — skipping AI strategy.")
+        strategy = _placeholder_strategy()
+
+    data = {
+        "accounts": accounts,
+        "comparison": comparison,
+        "strategy": strategy,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+    }
+
+    output = args.output or "report.html"
+    path = generate_html_report(data, output_path=output)
+    print(f"\nReport generated: {path}")
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -313,6 +399,22 @@ def build_parser() -> argparse.ArgumentParser:
     analyze_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
     analyze_parser.add_argument("--output", "-o", default="report.html", help="Output HTML file path")
 
+    # analyze-influencer
+    influencer_parser = subparsers.add_parser(
+        "analyze-influencer",
+        help="Analyze public influencer accounts via Apify (no Graph API auth required)",
+    )
+    influencer_parser.add_argument(
+        "--username", "-u",
+        action="append",
+        metavar="USERNAME",
+        help="Influencer Instagram username (can be repeated)",
+    )
+    influencer_parser.add_argument("--apify-token", help="Apify API token")
+    influencer_parser.add_argument("--post-limit", type=int, default=50, help="Number of recent posts to fetch per account")
+    influencer_parser.add_argument("--anthropic-key", help="Anthropic API key for Claude strategy")
+    influencer_parser.add_argument("--output", "-o", default="report.html", help="Output HTML file path")
+
     return parser
 
 
@@ -324,6 +426,8 @@ def main() -> None:
         cmd_demo(args)
     elif args.command == "analyze":
         cmd_analyze(args)
+    elif args.command == "analyze-influencer":
+        cmd_analyze_influencer(args)
     else:
         parser.print_help()
         sys.exit(1)
