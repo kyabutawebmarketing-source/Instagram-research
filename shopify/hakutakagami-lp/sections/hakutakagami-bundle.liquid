@@ -1,0 +1,134 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+<section class="hklp-section hklp-bundle">
+  <div class="hklp-container">
+    <header class="hklp-section-head">
+      <h2 class="hklp-heading">{{ s.heading }}</h2>
+      {%- comment -%}
+        価格・送料無料条件はShopify側で変更される可能性があるため、
+        本文はテーマエディターから編集できるようにしている。
+      {%- endcomment -%}
+      <div class="hklp-lead">{{ s.body }}</div>
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="hklp-bundle__ideas" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="hklp-bundle__cta">
+      <a
+        href="{{ s.cta_link | default: '#products' }}"
+        class="hklp-btn"
+        data-lp-event="click_cta"
+        data-cta-position="bundle"
+      >
+        {{ s.cta_label | default: '3つのデザインを見る' }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：まとめ買い・送料無料",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "お気に入りをまとめて選んで、送料無料に。"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "本文（価格・送料無料条件）",
+      "default": "<p>3枚のご購入で合計7,440円（税込）。<br>税込6,000円以上のご購入で送料無料になります。</p><p>洗い替えや、気分に合わせたコーデにも。</p>",
+      "info": "価格や送料無料条件が変わった場合は、ここを修正してください。"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA文言",
+      "default": "3つのデザインを見る"
+    },
+    {
+      "type": "text",
+      "id": "cta_link",
+      "label": "CTAリンク（アンカー）",
+      "default": "#products"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#eaf6fb"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "idea",
+      "name": "提案例",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "テキスト"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：まとめ買い・送料無料",
+      "blocks": [
+        { "type": "idea", "settings": { "text": "同じデザインの色違い" } },
+        { "type": "idea", "settings": { "text": "3デザインを1枚ずつ" } },
+        { "type": "idea", "settings": { "text": "多頭飼いのお揃いコーデ" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,234 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+{%- comment -%}
+  商品ラインナップ。
+  - id="products"（ファーストビュー・まとめ買い・固定CTAのスクロール先）
+  - 商品ブロックはテーマエディターから追加・削除・並び替え可能
+  - 商品ピッカーで商品を選択すると価格・売り切れ状態が自動反映される
+{%- endcomment -%}
+
+<section id="products" class="hklp-section hklp-products">
+  <div class="hklp-container">
+    <header class="hklp-section-head">
+      <h2 class="hklp-heading">{{ s.heading }}</h2>
+      {%- if s.subtext != blank -%}
+        <p class="hklp-lead">{{ s.subtext }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="hklp-products__grid">
+      {%- for block in section.blocks -%}
+        {% render 'hakutakagami-product-card', block: block, cta_position: 'product-card', lazy: true %}
+      {%- endfor -%}
+    </div>
+    <p class="hklp-products__hint" aria-hidden="true">← 横にスワイプできます →</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：商品ラインナップ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "セクション見出し",
+      "default": "うちの子には、どのデザイン？"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "補足テキスト（任意）",
+      "default": "全3デザイン・各2カラー。サイズはS／M／L／2L。"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#d9f1f7"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "商品カード",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "商品（選択すると価格・売り切れが自動反映）"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "商品名（商品未選択時に表示）"
+        },
+        {
+          "type": "text",
+          "id": "catchcopy",
+          "label": "キャッチコピー"
+        },
+        {
+          "type": "text",
+          "id": "colors_text",
+          "label": "カラー表記",
+          "default": "ミント／ピンク"
+        },
+        {
+          "type": "text",
+          "id": "sizes_text",
+          "label": "サイズ表記",
+          "default": "S／M／L／2L"
+        },
+        {
+          "type": "text",
+          "id": "price_text",
+          "label": "価格（商品未選択時に表示）",
+          "default": "2,480円（税込）"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "商品ページURL（商品未選択時に使用）"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA文言",
+          "default": "詳しく見る"
+        },
+        {
+          "type": "header",
+          "content": "画像1（カラーA）"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_a",
+          "label": "画像A"
+        },
+        {
+          "type": "text",
+          "id": "image_a_url",
+          "label": "画像A（URL指定・画像A未設定時に使用）"
+        },
+        {
+          "type": "text",
+          "id": "color_a",
+          "label": "カラーA名"
+        },
+        {
+          "type": "header",
+          "content": "画像2（カラーB）"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_b",
+          "label": "画像B"
+        },
+        {
+          "type": "text",
+          "id": "image_b_url",
+          "label": "画像B（URL指定・画像B未設定時に使用）"
+        },
+        {
+          "type": "text",
+          "id": "color_b",
+          "label": "カラーB名"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：商品ラインナップ",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "title": "涼ティー",
+            "catchcopy": "夏の主役は、この一枚。",
+            "colors_text": "ミント／ピンク",
+            "link": "/products/pets04",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715",
+            "color_b": "ピンク"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっといい気分",
+            "catchcopy": "着た瞬間、なんかちょっといい気分。",
+            "colors_text": "ミント／パープル",
+            "link": "/products/pets05",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715",
+            "color_b": "パープル"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっとかいてき",
+            "catchcopy": "ひんやり着られて、なんかちょっと快適。",
+            "colors_text": "イエロー／ブルー",
+            "link": "/products/pets06",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715",
+            "color_a": "イエロー",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715",
+            "color_b": "ブルー",
+            "cta_label": "このデザインを詳しく見る"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+{% comment %}
+  TODO: 「なんかちょっとかいてき」の商品URLについて、依頼内容では
+  /products/pets05 と /products/pets06 が混在していました。
+  商品一覧の記載を優先して /products/pets06 を初期値にしています。
+  公開前に実際の商品ハンドルをご確認ください。
+{% endcomment %}

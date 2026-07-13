@@ -1,0 +1,277 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+<section class="hklp-section hklp-size">
+  <div class="hklp-container">
+    <header class="hklp-section-head">
+      <h2 class="hklp-heading">{{ s.heading }}</h2>
+      {%- if s.body != blank -%}
+        <div class="hklp-lead">{{ s.body }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- comment -%} 測り方 {%- endcomment -%}
+    {%- assign measure_blocks = section.blocks | where: 'type', 'measure' -%}
+    {%- if measure_blocks.size > 0 -%}
+      <div class="hklp-size__measures">
+        {%- for block in measure_blocks -%}
+          <article class="hklp-measure-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag:
+                widths: '300, 450, 600',
+                sizes: '(min-width: 750px) 320px, 100vw',
+                alt: block.settings.title,
+                loading: 'lazy'
+              }}
+            {%- endif -%}
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      サイズ表。
+      テキストエリアに「サイズ|首回り|胴回り|着丈」を1行1サイズで入力する。
+      正確な数値が未確認の間は「—」のままにしておくこと（架空の数値を入れない）。
+    {%- endcomment -%}
+    {%- if s.size_table != blank -%}
+      <div class="hklp-size__table-wrap" tabindex="0" role="region" aria-label="サイズ表">
+        <table class="hklp-size__table">
+          <caption class="hklp-visually-hidden">{{ s.heading | escape }} サイズ表</caption>
+          <thead>
+            <tr>
+              <th scope="col">サイズ</th>
+              <th scope="col">首回り</th>
+              <th scope="col">胴回り</th>
+              <th scope="col">着丈</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- assign rows = s.size_table | strip | newline_to_br | split: '<br />' -%}
+            {%- for row in rows -%}
+              {%- assign cells = row | strip | split: '|' -%}
+              {%- if cells.size > 0 -%}
+                <tr>
+                  <th scope="row">{{ cells[0] | strip }}</th>
+                  <td>{{ cells[1] | strip | default: '—' }}</td>
+                  <td>{{ cells[2] | strip | default: '—' }}</td>
+                  <td>{{ cells[3] | strip | default: '—' }}</td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+      {%- if s.table_note != blank -%}
+        <p class="hklp-size__table-note">{{ s.table_note }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} 着用犬の例（犬種・体重・着用サイズ） {%- endcomment -%}
+    {%- assign model_blocks = section.blocks | where: 'type', 'model_dog' -%}
+    {%- assign has_model = false -%}
+    {%- for block in model_blocks -%}
+      {%- if block.settings.breed != blank -%}
+        {%- assign has_model = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if has_model -%}
+      <div class="hklp-size__models">
+        {%- for block in model_blocks -%}
+          {%- if block.settings.breed != blank -%}
+            <article class="hklp-model-card" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 200 | image_tag:
+                  widths: '100, 200',
+                  alt: block.settings.breed,
+                  loading: 'lazy'
+                }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag }}
+              {%- endif -%}
+              <dl>
+                <div><dt>犬種</dt><dd>{{ block.settings.breed }}</dd></div>
+                {%- if block.settings.weight != blank -%}
+                  <div><dt>体重</dt><dd>{{ block.settings.weight }}</dd></div>
+                {%- endif -%}
+                {%- if block.settings.size != blank -%}
+                  <div><dt>着用サイズ</dt><dd>{{ block.settings.size }}</dd></div>
+                {%- endif -%}
+                {%- if block.settings.comment != blank -%}
+                  <div><dt>コメント</dt><dd>{{ block.settings.comment }}</dd></div>
+                {%- endif -%}
+              </dl>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：サイズの選び方",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "ぴったりサイズで、もっと快適に。"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "本文",
+      "default": "<p>普段のお洋服のサイズだけで選ばず、<br>「首回り・胴回り・着丈」の実寸をご確認ください。</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "size_table",
+      "label": "サイズ表（1行＝1サイズ。「サイズ|首回り|胴回り|着丈」の形式）",
+      "default": "S|—|—|—\nM|—|—|—\nL|—|—|—\n2L|—|—|—",
+      "info": "正確な数値は各商品ページの商品情報を確認して入力してください。未確認の項目は「—」のままにしてください。"
+    },
+    {
+      "type": "text",
+      "id": "table_note",
+      "label": "サイズ表の注記",
+      "default": "単位：cm。実寸には個体差があります。詳しくは各商品ページをご確認ください。"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#f4fbf8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー（表ヘッダー背景）",
+      "default": "#d9f1f7"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "measure",
+      "name": "測り方",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "項目名"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "測り方の説明"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "説明イラスト・写真（dog-size-guide）"
+        }
+      ]
+    },
+    {
+      "type": "model_dog",
+      "name": "着用犬の例",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "着用写真"
+        },
+        {
+          "type": "text",
+          "id": "breed",
+          "label": "犬種",
+          "info": "未入力の場合、このブロックは表示されません。"
+        },
+        {
+          "type": "text",
+          "id": "weight",
+          "label": "体重（例：3.2kg）"
+        },
+        {
+          "type": "text",
+          "id": "size",
+          "label": "着用サイズ（例：S）"
+        },
+        {
+          "type": "text",
+          "id": "comment",
+          "label": "コメント（任意）"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：サイズの選び方",
+      "blocks": [
+        {
+          "type": "measure",
+          "settings": {
+            "title": "首回りの測り方",
+            "text": "首の付け根まわりを、メジャーと首の間に指1〜2本入る程度のゆとりを持たせて測ります。"
+          }
+        },
+        {
+          "type": "measure",
+          "settings": {
+            "title": "胴回りの測り方",
+            "text": "前足の付け根のすぐ後ろ、胴のいちばん太い部分をひと回り測ります。"
+          }
+        },
+        {
+          "type": "measure",
+          "settings": {
+            "title": "着丈の測り方",
+            "text": "首の付け根から、しっぽの付け根までの背中の長さを測ります。"
+          }
+        },
+        {
+          "type": "model_dog",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

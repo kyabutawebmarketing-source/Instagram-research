@@ -1,0 +1,396 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hakutakagami-hero",
+      "settings": {
+        "title": "アートを着て、夏を涼しく。",
+        "subcopy": "加賀美健×hakutaka\n接触冷感素材のドッグウェアが新登場。",
+        "meta_text": "全3デザイン・各2カラー\nS／M／L／2L",
+        "offer_text": "税込6,000円以上のご購入で送料無料",
+        "show_badges": true,
+        "badge_1": "犬用ウェア",
+        "badge_2": "夏の新作",
+        "badge_3": "接触冷感素材",
+        "cta_label": "3つのデザインを見る",
+        "cta_link": "#products",
+        "image_alt": "接触冷感ドッグウェアを着た犬の夏らしいコラージュ",
+        "collage_url_1": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715",
+        "collage_url_2": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715",
+        "collage_url_3": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715",
+        "bg_color": "#eaf6fb",
+        "text_color": "#1c2b33",
+        "accent_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 64
+      }
+    },
+    "intro": {
+      "type": "hakutakagami-intro",
+      "settings": {
+        "eyebrow": "SUMMER WALK",
+        "heading": "暑い季節も、愛犬とのお出かけを楽しみたいから。",
+        "body": "<p>夏のお散歩やお出かけは楽しみたい。<br>でも、暑さやムレによる愛犬の負担も気になる。</p><p>そんな夏の毎日に、触れた瞬間ひんやり感じる接触冷感素材のドッグウェアを。</p>",
+        "image_alt": "夏の公園を散歩する犬"
+      }
+    },
+    "features": {
+      "type": "hakutakagami-features",
+      "blocks": {
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "title": "触れた瞬間、ひんやり",
+            "text": "接触冷感素材を使用。\n暑い時期のお散歩やお出かけに適した、さらっとした着心地です。",
+            "icon_emoji": "❄️"
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "title": "動きやすく、やさしくフィット",
+            "text": "伸縮性のある生地が、愛犬の動きにやさしくフィット。\nお散歩やお出かけにも使いやすい着心地です。",
+            "icon_emoji": "🐕"
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "title": "着るだけで楽しくなるアートデザイン",
+            "text": "現代美術作家・加賀美健が描き下ろした、思わず笑顔になるユーモアあふれるデザイン。",
+            "icon_emoji": "🎨"
+          }
+        }
+      },
+      "block_order": ["feature-1", "feature-2", "feature-3"],
+      "settings": {
+        "heading": "夏のお出かけを、もっと快適にする3つのポイント",
+        "material_note": "素材：ナイロン75％・ポリウレタン25％"
+      }
+    },
+    "products": {
+      "type": "hakutakagami-products",
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "title": "涼ティー",
+            "catchcopy": "夏の主役は、この一枚。",
+            "colors_text": "ミント／ピンク",
+            "sizes_text": "S／M／L／2L",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets04",
+            "cta_label": "詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715",
+            "color_b": "ピンク"
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっといい気分",
+            "catchcopy": "着た瞬間、なんかちょっといい気分。",
+            "colors_text": "ミント／パープル",
+            "sizes_text": "S／M／L／2L",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets05",
+            "cta_label": "詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715",
+            "color_b": "パープル"
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっとかいてき",
+            "catchcopy": "ひんやり着られて、なんかちょっと快適。",
+            "colors_text": "イエロー／ブルー",
+            "sizes_text": "S／M／L／2L",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets06",
+            "cta_label": "このデザインを詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715",
+            "color_a": "イエロー",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715",
+            "color_b": "ブルー"
+          }
+        }
+      },
+      "block_order": ["product-1", "product-2", "product-3"],
+      "settings": {
+        "heading": "うちの子には、どのデザイン？",
+        "subtext": "全3デザイン・各2カラー。サイズはS／M／L／2L。"
+      }
+    },
+    "colors": {
+      "type": "hakutakagami-colors",
+      "blocks": {
+        "color-1": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "涼ティー",
+            "color_name": "ミント",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715",
+            "link": "/products/pets04"
+          }
+        },
+        "color-2": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "涼ティー",
+            "color_name": "ピンク",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715",
+            "link": "/products/pets04"
+          }
+        },
+        "color-3": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "なんかちょっといい気分",
+            "color_name": "ミント",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715",
+            "link": "/products/pets05"
+          }
+        },
+        "color-4": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "なんかちょっといい気分",
+            "color_name": "パープル",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715",
+            "link": "/products/pets05"
+          }
+        },
+        "color-5": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "なんかちょっとかいてき",
+            "color_name": "イエロー",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715",
+            "link": "/products/pets06"
+          }
+        },
+        "color-6": {
+          "type": "color_item",
+          "settings": {
+            "product_name": "なんかちょっとかいてき",
+            "color_name": "ブルー",
+            "image_url": "https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715",
+            "link": "/products/pets06"
+          }
+        }
+      },
+      "block_order": ["color-1", "color-2", "color-3", "color-4", "color-5", "color-6"],
+      "settings": {
+        "heading": "全6カラーから、うちの子らしい一枚を。",
+        "note": "※実際の色味は商品ページの画像をご確認ください。"
+      }
+    },
+    "scenes": {
+      "type": "hakutakagami-scenes",
+      "blocks": {
+        "scene-1": { "type": "scene", "settings": { "label": "朝夕のお散歩" } },
+        "scene-2": { "type": "scene", "settings": { "label": "公園へのお出かけ" } },
+        "scene-3": { "type": "scene", "settings": { "label": "カフェや旅行" } },
+        "scene-4": { "type": "scene", "settings": { "label": "夏の記念撮影" } },
+        "scene-5": { "type": "scene", "settings": { "label": "多頭飼いのお揃いコーデ" } }
+      },
+      "block_order": ["scene-1", "scene-2", "scene-3", "scene-4", "scene-5"],
+      "settings": {
+        "heading": "いつもの夏のお出かけを、もっと楽しく。",
+        "body": "<p>お散歩でも、旅行でも、写真を撮る日でも。<br>思わず誰かに見せたくなる、愛犬の夏コーデ。</p>"
+      }
+    },
+    "artist": {
+      "type": "hakutakagami-artist",
+      "settings": {
+        "eyebrow": "COLLABORATION",
+        "heading": "アートとユーモアを、愛犬の日常に。",
+        "body": "<p>社会現象やカルチャーを、ジョーク的な発想で作品に変える現代美術作家・加賀美健。</p><p>今回のコラボレーションでは、日常のひと言をユーモアあふれるデザインで表現しました。</p>",
+        "artist_name": "加賀美健（現代美術作家）",
+        "image_alt": "現代美術作家・加賀美健"
+      }
+    },
+    "size-guide": {
+      "type": "hakutakagami-size-guide",
+      "blocks": {
+        "measure-1": {
+          "type": "measure",
+          "settings": {
+            "title": "首回りの測り方",
+            "text": "首の付け根まわりを、メジャーと首の間に指1〜2本入る程度のゆとりを持たせて測ります。"
+          }
+        },
+        "measure-2": {
+          "type": "measure",
+          "settings": {
+            "title": "胴回りの測り方",
+            "text": "前足の付け根のすぐ後ろ、胴のいちばん太い部分をひと回り測ります。"
+          }
+        },
+        "measure-3": {
+          "type": "measure",
+          "settings": {
+            "title": "着丈の測り方",
+            "text": "首の付け根から、しっぽの付け根までの背中の長さを測ります。"
+          }
+        },
+        "model-1": {
+          "type": "model_dog",
+          "settings": {}
+        }
+      },
+      "block_order": ["measure-1", "measure-2", "measure-3", "model-1"],
+      "settings": {
+        "heading": "ぴったりサイズで、もっと快適に。",
+        "body": "<p>普段のお洋服のサイズだけで選ばず、<br>「首回り・胴回り・着丈」の実寸をご確認ください。</p>",
+        "size_table": "S|—|—|—\nM|—|—|—\nL|—|—|—\n2L|—|—|—",
+        "table_note": "単位：cm。実寸には個体差があります。詳しくは各商品ページをご確認ください。"
+      }
+    },
+    "brand": {
+      "type": "hakutakagami-brand",
+      "settings": {
+        "eyebrow": "ABOUT hakutaka",
+        "heading": "愛犬が毎日着るものだから、着心地にもこだわりました。",
+        "body": "<p>hakutakaは、創業90年以上のインナーメーカー。<br>長年培ってきた肌着づくりの知見を活かし、素材や着心地に配慮した商品づくりを行っています。</p>",
+        "image_alt": "hakutakaのものづくり"
+      }
+    },
+    "bundle": {
+      "type": "hakutakagami-bundle",
+      "blocks": {
+        "idea-1": { "type": "idea", "settings": { "text": "同じデザインの色違い" } },
+        "idea-2": { "type": "idea", "settings": { "text": "3デザインを1枚ずつ" } },
+        "idea-3": { "type": "idea", "settings": { "text": "多頭飼いのお揃いコーデ" } }
+      },
+      "block_order": ["idea-1", "idea-2", "idea-3"],
+      "settings": {
+        "heading": "お気に入りをまとめて選んで、送料無料に。",
+        "body": "<p>3枚のご購入で合計7,440円（税込）。<br>税込6,000円以上のご購入で送料無料になります。</p><p>洗い替えや、気分に合わせたコーデにも。</p>",
+        "cta_label": "3つのデザインを見る",
+        "cta_link": "#products"
+      }
+    },
+    "faq": {
+      "type": "hakutakagami-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "faq",
+          "settings": {
+            "question": "接触冷感とは何ですか？",
+            "answer": "<p>生地に触れたときに、ひんやりとした感触が得られる素材です。</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq",
+          "settings": {
+            "question": "夏の昼間でも散歩できますか？",
+            "answer": "<p>接触冷感素材は暑い時期の快適性をサポートするものですが、熱中症を防ぐものではありません。気温の高い時間帯を避け、こまめな水分補給を行ってください。</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq",
+          "settings": {
+            "question": "サイズ交換はできますか？",
+            "answer": "<p>返品・交換条件は、hakutakaストアの返品・交換規定をご確認ください。</p>",
+            "link_label": "返品・交換規定を見る"
+          }
+        },
+        "faq-4": {
+          "type": "faq",
+          "settings": {
+            "question": "洗濯機で洗えますか？",
+            "answer": "<p>商品の洗濯表示をご確認のうえ、表示に従ってお手入れしてください。</p>"
+          }
+        },
+        "faq-5": {
+          "type": "faq",
+          "settings": {
+            "question": "どの犬種でも着用できますか？",
+            "answer": "<p>サイズ表をご確認のうえ、愛犬の実寸に合うサイズをお選びください。</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4", "faq-5"],
+      "settings": {
+        "heading": "よくあるご質問"
+      }
+    },
+    "final-cta": {
+      "type": "hakutakagami-final-cta",
+      "blocks": {
+        "final-1": {
+          "type": "product",
+          "settings": {
+            "title": "涼ティー",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets04",
+            "cta_label": "詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715",
+            "color_b": "ピンク"
+          }
+        },
+        "final-2": {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっといい気分",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets05",
+            "cta_label": "詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715",
+            "color_a": "ミント",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715",
+            "color_b": "パープル"
+          }
+        },
+        "final-3": {
+          "type": "product",
+          "settings": {
+            "title": "なんかちょっとかいてき",
+            "price_text": "2,480円（税込）",
+            "link": "/products/pets06",
+            "cta_label": "詳しく見る",
+            "image_a_url": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715",
+            "color_a": "イエロー",
+            "image_b_url": "https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715",
+            "color_b": "ブルー"
+          }
+        }
+      },
+      "block_order": ["final-1", "final-2", "final-3"],
+      "settings": {
+        "heading": "この夏、うちの子もアートを着よう。",
+        "body": "<p>ひんやり快適な着心地と、<br>思わず笑顔になるユーモアを。</p><p>夏のお散歩がもっと楽しくなる、<br>hakutakagamiの接触冷感ドッグウェア。</p>"
+      }
+    },
+    "sticky-cta": {
+      "type": "hakutakagami-sticky-cta",
+      "settings": {
+        "cta_label": "3つのデザインを見る",
+        "cta_link": "#products",
+        "show_after": 600
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "intro",
+    "features",
+    "products",
+    "colors",
+    "scenes",
+    "artist",
+    "size-guide",
+    "brand",
+    "bundle",
+    "faq",
+    "final-cta",
+    "sticky-cta"
+  ]
+}

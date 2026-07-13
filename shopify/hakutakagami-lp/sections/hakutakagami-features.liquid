@@ -1,0 +1,157 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+<section class="hklp-section hklp-features">
+  <div class="hklp-container">
+    <header class="hklp-section-head">
+      <h2 class="hklp-heading">{{ s.heading }}</h2>
+    </header>
+
+    <div class="hklp-features__grid">
+      {%- for block in section.blocks -%}
+        <article class="hklp-feature-card" {{ block.shopify_attributes }}>
+          <span class="hklp-feature-card__point">POINT {{ forloop.index | prepend: '0' }}</span>
+          <span class="hklp-feature-card__icon" aria-hidden="true">
+            {%- if block.settings.icon_image != blank -%}
+              {{ block.settings.icon_image | image_url: width: 64 | image_tag: alt: '', loading: 'lazy' }}
+            {%- else -%}
+              {{ block.settings.icon_emoji }}
+            {%- endif -%}
+          </span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text | newline_to_br }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if s.material_note != blank -%}
+      <p class="hklp-features__note">{{ s.material_note }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：商品の特徴",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "セクション見出し",
+      "default": "夏のお出かけを、もっと快適にする3つのポイント"
+    },
+    {
+      "type": "text",
+      "id": "material_note",
+      "label": "素材表記",
+      "default": "素材：ナイロン75％・ポリウレタン25％",
+      "info": "商品ページの素材表記と異なる場合は、実際の商品情報に合わせて修正してください。"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#f4fbf8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#e3f5ee"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "特徴",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "見出し"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "本文"
+        },
+        {
+          "type": "text",
+          "id": "icon_emoji",
+          "label": "アイコン（絵文字）",
+          "default": "❄️"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "アイコン画像（設定時は絵文字より優先）"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：商品の特徴",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "触れた瞬間、ひんやり",
+            "text": "接触冷感素材を使用。\n暑い時期のお散歩やお出かけに適した、さらっとした着心地です。",
+            "icon_emoji": "❄️"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "動きやすく、やさしくフィット",
+            "text": "伸縮性のある生地が、愛犬の動きにやさしくフィット。\nお散歩やお出かけにも使いやすい着心地です。",
+            "icon_emoji": "🐕"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "着るだけで楽しくなるアートデザイン",
+            "text": "現代美術作家・加賀美健が描き下ろした、思わず笑顔になるユーモアあふれるデザイン。",
+            "icon_emoji": "🎨"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,64 @@
+{{ 'hakutakagami-lp.css' | asset_url | stylesheet_tag }}
+{{ 'hakutakagami-lp.js' | asset_url | script_tag }}
+
+{%- assign s = section.settings -%}
+
+{%- comment -%}
+  スマートフォン用 固定CTA
+  - 一定量スクロール後に画面下部へ表示（JavaScriptで制御）
+  - フッター付近では非表示（IntersectionObserver）
+  - iPhoneのセーフエリア対応（env(safe-area-inset-bottom)）
+  - 表示中は body に余白を追加し、コンテンツが隠れないようにする
+  - PC（750px以上）では表示しない
+{%- endcomment -%}
+
+<div
+  class="hklp-sticky"
+  data-hklp-sticky
+  data-show-after="{{ s.show_after }}"
+  aria-hidden="true"
+>
+  <a
+    href="{{ s.cta_link | default: '#products' }}"
+    class="hklp-btn"
+    data-lp-event="click_cta"
+    data-cta-position="sticky"
+  >
+    {{ s.cta_label | default: '3つのデザインを見る' }}
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "LP：固定CTA（スマホ）",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA文言",
+      "default": "3つのデザインを見る"
+    },
+    {
+      "type": "text",
+      "id": "cta_link",
+      "label": "CTAリンク（アンカー）",
+      "default": "#products"
+    },
+    {
+      "type": "range",
+      "id": "show_after",
+      "label": "表示を開始するスクロール量",
+      "min": 200,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "default": 600
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：固定CTA（スマホ）"
+    }
+  ]
+}
+{% endschema %}

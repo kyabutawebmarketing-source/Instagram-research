@@ -1,0 +1,297 @@
+{% render 'hakutakagami-section-style' %}
+{{ 'hakutakagami-lp.js' | asset_url | script_tag }}
+
+{%- liquid
+  assign s = section.settings
+-%}
+
+<section class="hklp-section hklp-hero" aria-label="{{ s.title | escape }}">
+  <div class="hklp-container">
+    <div class="hklp-hero__inner">
+      <div class="hklp-hero__copy">
+        {%- if s.show_badges -%}
+          <ul class="hklp-hero__badges">
+            {%- if s.badge_1 != blank -%}<li>{{ s.badge_1 }}</li>{%- endif -%}
+            {%- if s.badge_2 != blank -%}<li>{{ s.badge_2 }}</li>{%- endif -%}
+            {%- if s.badge_3 != blank -%}<li>{{ s.badge_3 }}</li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+
+        <h1 class="hklp-hero__title">{{ s.title }}</h1>
+
+        {%- if s.subcopy != blank -%}
+          <p class="hklp-hero__subcopy">{{ s.subcopy | newline_to_br }}</p>
+        {%- endif -%}
+
+        {%- if s.meta_text != blank -%}
+          <p class="hklp-hero__meta">{{ s.meta_text | newline_to_br }}</p>
+        {%- endif -%}
+
+        {%- if s.offer_text != blank -%}
+          <p class="hklp-hero__offer">{{ s.offer_text }}</p>
+        {%- endif -%}
+
+        <div>
+          <a
+            href="{{ s.cta_link | default: '#products' }}"
+            class="hklp-btn"
+            data-lp-event="click_cta"
+            data-cta-position="hero"
+          >
+            {{ s.cta_label | default: '3つのデザインを見る' }}
+          </a>
+        </div>
+      </div>
+
+      <div class="hklp-hero__visual">
+        {%- comment -%}
+          PC用／スマホ用のメイン画像が設定されていればそれを表示。
+          未設定の場合は、商品画像3点のコラージュ表示にフォールバックする。
+          ファーストビューの画像はLCP要素のため遅延読み込みしない。
+        {%- endcomment -%}
+        {%- if s.image_pc != blank or s.image_sp != blank -%}
+          <div class="hklp-hero__image">
+            {%- liquid
+              assign pc_image = s.image_pc | default: s.image_sp
+              assign sp_image = s.image_sp | default: s.image_pc
+            -%}
+            <picture>
+              {%- if s.image_sp != blank and s.image_pc != blank -%}
+                <source
+                  media="(max-width: 749px)"
+                  srcset="{{ sp_image | image_url: width: 750 }} 750w"
+                >
+              {%- endif -%}
+              {{ pc_image | image_url: width: 1400 | image_tag:
+                widths: '750, 1000, 1400',
+                sizes: '(min-width: 990px) 640px, 100vw',
+                alt: s.image_alt,
+                loading: 'eager',
+                fetchpriority: 'high'
+              }}
+            </picture>
+          </div>
+        {%- else -%}
+          <div class="hklp-hero__collage" role="img" aria-label="{{ s.image_alt | escape }}">
+            {%- for i in (1..3) -%}
+              {%- liquid
+                case i
+                  when 1
+                    assign c_img = s.collage_image_1
+                    assign c_url = s.collage_url_1
+                  when 2
+                    assign c_img = s.collage_image_2
+                    assign c_url = s.collage_url_2
+                  else
+                    assign c_img = s.collage_image_3
+                    assign c_url = s.collage_url_3
+                endcase
+              -%}
+              <div class="hklp-hero__collage-item">
+                {%- if c_img != blank -%}
+                  {{ c_img | image_url: width: 600 | image_tag:
+                    widths: '300, 450, 600',
+                    sizes: '(min-width: 990px) 200px, 30vw',
+                    alt: '',
+                    loading: 'eager'
+                  }}
+                {%- elsif c_url != blank -%}
+                  <img src="{{ c_url }}" alt="" width="600" height="600" loading="eager">
+                {%- else -%}
+                  {{ 'product-2' | placeholder_svg_tag }}
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：ファーストビュー",
+  "tag": "section",
+  "class": "hklp-section-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "コピー"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "メインコピー（h1）",
+      "default": "アートを着て、夏を涼しく。"
+    },
+    {
+      "type": "textarea",
+      "id": "subcopy",
+      "label": "サブコピー",
+      "default": "加賀美健×hakutaka\n接触冷感素材のドッグウェアが新登場。"
+    },
+    {
+      "type": "textarea",
+      "id": "meta_text",
+      "label": "補足情報",
+      "default": "全3デザイン・各2カラー\nS／M／L／2L"
+    },
+    {
+      "type": "text",
+      "id": "offer_text",
+      "label": "オファー",
+      "default": "税込6,000円以上のご購入で送料無料"
+    },
+    {
+      "type": "header",
+      "content": "バッジ（ページを開いた瞬間に伝える要素）"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badges",
+      "label": "バッジを表示する",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_1",
+      "label": "バッジ1",
+      "default": "犬用ウェア"
+    },
+    {
+      "type": "text",
+      "id": "badge_2",
+      "label": "バッジ2",
+      "default": "夏の新作"
+    },
+    {
+      "type": "text",
+      "id": "badge_3",
+      "label": "バッジ3",
+      "default": "接触冷感素材"
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA文言",
+      "default": "3つのデザインを見る"
+    },
+    {
+      "type": "text",
+      "id": "cta_link",
+      "label": "CTAリンク（アンカー）",
+      "default": "#products",
+      "info": "商品ラインナップセクションのid（#products）を指定するとスムーズスクロールします。"
+    },
+    {
+      "type": "header",
+      "content": "メイン画像（設定するとコラージュの代わりに表示）"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_pc",
+      "label": "PC用画像（fv-dogwear-pc）"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_sp",
+      "label": "スマートフォン用画像（fv-dogwear-sp）"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "画像の代替テキスト",
+      "default": "接触冷感ドッグウェアを着た犬の夏らしいコラージュ"
+    },
+    {
+      "type": "header",
+      "content": "コラージュ画像（メイン画像未設定時に表示）"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_1",
+      "label": "コラージュ画像1"
+    },
+    {
+      "type": "text",
+      "id": "collage_url_1",
+      "label": "コラージュ画像1（URL指定）",
+      "default": "https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_2",
+      "label": "コラージュ画像2"
+    },
+    {
+      "type": "text",
+      "id": "collage_url_2",
+      "label": "コラージュ画像2（URL指定）",
+      "default": "https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715"
+    },
+    {
+      "type": "image_picker",
+      "id": "collage_image_3",
+      "label": "コラージュ画像3"
+    },
+    {
+      "type": "text",
+      "id": "collage_url_3",
+      "label": "コラージュ画像3（URL指定）",
+      "default": "https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#eaf6fb"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：ファーストビュー"
+    }
+  ]
+}
+{% endschema %}

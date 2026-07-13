@@ -1,0 +1,118 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+<section class="hklp-section hklp-intro">
+  <div class="hklp-container">
+    <div class="hklp-intro__inner">
+      <div class="hklp-intro__media">
+        {%- comment -%}
+          夏のお散歩や公園をイメージできる写真をテーマエディターから登録する。
+          未登録時はプレースホルダーを表示。
+        {%- endcomment -%}
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 1200 | image_tag:
+            widths: '600, 900, 1200',
+            sizes: '(min-width: 990px) 560px, 100vw',
+            alt: s.image_alt,
+            loading: 'lazy'
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="hklp-intro__copy">
+        {%- if s.eyebrow != blank -%}
+          <span class="hklp-eyebrow">{{ s.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="hklp-heading">{{ s.heading }}</h2>
+        <div class="hklp-lead">{{ s.body }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：共感・問題提起",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "小見出し（任意）",
+      "default": "SUMMER WALK"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "暑い季節も、愛犬とのお出かけを楽しみたいから。"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "本文",
+      "default": "<p>夏のお散歩やお出かけは楽しみたい。<br>でも、暑さやムレによる愛犬の負担も気になる。</p><p>そんな夏の毎日に、触れた瞬間ひんやり感じる接触冷感素材のドッグウェアを。</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "イメージ写真（夏のお散歩・公園など）"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "画像の代替テキスト",
+      "default": "夏の公園を散歩する犬"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#d9f1f7"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：共感・問題提起"
+    }
+  ]
+}
+{% endschema %}

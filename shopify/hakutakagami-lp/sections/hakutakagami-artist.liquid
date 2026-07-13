@@ -1,0 +1,140 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+<section class="hklp-section hklp-artist">
+  <div class="hklp-container">
+    <div class="hklp-artist__inner">
+      <div class="hklp-artist__media">
+        {%- comment -%}
+          アーティスト写真・作品写真・ロゴなどをテーマエディターから登録する枠。
+          未登録時はプレースホルダーを表示。
+        {%- endcomment -%}
+        {%- if s.image != blank -%}
+          {{ s.image | image_url: width: 900 | image_tag:
+            widths: '450, 700, 900',
+            sizes: '(min-width: 990px) 440px, 100vw',
+            alt: s.image_alt,
+            loading: 'lazy'
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="hklp-artist__copy">
+        {%- if s.eyebrow != blank -%}
+          <span class="hklp-eyebrow">{{ s.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="hklp-heading">{{ s.heading }}</h2>
+        <div class="hklp-lead">{{ s.body }}</div>
+        {%- if s.artist_name != blank -%}
+          <p class="hklp-artist__name">{{ s.artist_name }}</p>
+        {%- endif -%}
+        {%- if s.artist_profile != blank -%}
+          {%- comment -%}
+            プロフィール情報は、商品ページまたは公式情報で確認できる内容のみ
+            入力すること（未確認の経歴・受賞歴などは記載しない）。
+          {%- endcomment -%}
+          <p class="hklp-artist__profile">{{ s.artist_profile }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LP：加賀美健コラボ紹介",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "小見出し（任意）",
+      "default": "COLLABORATION"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "アートとユーモアを、愛犬の日常に。"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "本文",
+      "default": "<p>社会現象やカルチャーを、ジョーク的な発想で作品に変える現代美術作家・加賀美健。</p><p>今回のコラボレーションでは、日常のひと言をユーモアあふれるデザインで表現しました。</p>"
+    },
+    {
+      "type": "text",
+      "id": "artist_name",
+      "label": "アーティスト名表記",
+      "default": "加賀美健（現代美術作家）"
+    },
+    {
+      "type": "text",
+      "id": "artist_profile",
+      "label": "プロフィール（任意）",
+      "info": "商品ページや公式サイトで確認できる情報のみ入力してください（例：1974年東京都生まれ）。"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "アーティスト写真・作品写真・ロゴ（kagami-ken-profile）"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "画像の代替テキスト",
+      "default": "現代美術作家・加賀美健"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#fff3c4"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：加賀美健コラボ紹介"
+    }
+  ]
+}
+{% endschema %}

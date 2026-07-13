@@ -1,0 +1,129 @@
+{% comment %}
+  hakutakagami LP 商品カード
+  受け取るパラメータ:
+    block         : 商品ブロック（type: "product"）
+    cta_position  : 計測用のCTA位置（例: "product-card", "final-cta"）
+    lazy          : true の場合、画像を loading="lazy" にする
+
+  商品はブロック設定の商品ピッカー（block.settings.product）を優先し、
+  価格・売り切れ状態を自動反映する。
+  商品が未選択の場合は、手入力のフォールバック設定を表示する。
+{% endcomment %}
+
+{%- liquid
+  assign bs = block.settings
+  assign product = bs.product
+
+  if product != blank
+    assign card_title = product.title
+    assign card_url = product.url
+    assign card_handle = product.handle
+    assign is_soldout = false
+    unless product.available
+      assign is_soldout = true
+    endunless
+  else
+    assign card_title = bs.title
+    assign card_url = bs.link
+    assign card_handle = bs.link | split: '/products/' | last | split: '?' | first
+    assign is_soldout = false
+  endif
+
+  assign loading_attr = 'eager'
+  if lazy
+    assign loading_attr = 'lazy'
+  endif
+-%}
+
+<article class="hklp-product-card" {{ block.shopify_attributes }}>
+  <div class="hklp-product-card__images">
+    {%- for i in (1..2) -%}
+      {%- liquid
+        if i == 1
+          assign img = bs.image_a
+          assign img_url = bs.image_a_url
+          assign color_name = bs.color_a
+        else
+          assign img = bs.image_b
+          assign img_url = bs.image_b_url
+          assign color_name = bs.color_b
+        endif
+        assign img_alt = '接触冷感ドッグウェア「' | append: card_title | append: '」 ' | append: color_name
+      -%}
+      <figure class="hklp-product-card__figure">
+        {%- if is_soldout and i == 1 -%}
+          <span class="hklp-product-card__soldout">売り切れ</span>
+        {%- endif -%}
+        {%- if img != blank -%}
+          {{ img | image_url: width: 800 | image_tag:
+            widths: '360, 540, 800',
+            sizes: '(min-width: 750px) 220px, 40vw',
+            alt: img_alt,
+            loading: loading_attr
+          }}
+        {%- elsif img_url != blank -%}
+          <img
+            src="{{ img_url }}"
+            alt="{{ img_alt | escape }}"
+            width="800"
+            height="800"
+            loading="{{ loading_attr }}"
+          >
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag }}
+        {%- endif -%}
+        {%- if color_name != blank -%}
+          <figcaption class="hklp-product-card__figcaption">{{ color_name }}</figcaption>
+        {%- endif -%}
+      </figure>
+    {%- endfor -%}
+  </div>
+
+  <h3 class="hklp-product-card__title">{{ card_title }}</h3>
+
+  {%- if bs.catchcopy != blank -%}
+    <p class="hklp-product-card__copy">{{ bs.catchcopy }}</p>
+  {%- endif -%}
+
+  <dl class="hklp-product-card__specs">
+    {%- if bs.colors_text != blank -%}
+      <div>
+        <dt>カラー</dt>
+        <dd>{{ bs.colors_text }}</dd>
+      </div>
+    {%- endif -%}
+    {%- if bs.sizes_text != blank -%}
+      <div>
+        <dt>サイズ</dt>
+        <dd>{{ bs.sizes_text }}</dd>
+      </div>
+    {%- endif -%}
+  </dl>
+
+  <p class="hklp-product-card__price">
+    {%- if product != blank -%}
+      {{ product.price_min | money }}
+      <small>（税込）</small>
+    {%- elsif bs.price_text != blank -%}
+      {{ bs.price_text }}
+    {%- endif -%}
+  </p>
+
+  <div class="hklp-product-card__cta">
+    {%- if card_url != blank -%}
+      <a
+        href="{{ card_url }}"
+        class="hklp-btn hklp-btn--block{% if is_soldout %} hklp-btn--soldout{% endif %}"
+        data-lp-event="click_product"
+        data-product-handle="{{ card_handle }}"
+        data-cta-position="{{ cta_position | default: 'product-card' }}"
+      >
+        {%- if is_soldout -%}
+          売り切れ
+        {%- else -%}
+          {{ bs.cta_label | default: '詳しく見る' }}
+        {%- endif -%}
+      </a>
+    {%- endif -%}
+  </div>
+</article>

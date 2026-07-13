@@ -1,0 +1,192 @@
+{% render 'hakutakagami-section-style' %}
+
+{%- assign s = section.settings -%}
+
+{%- comment -%}
+  FAQ（アコーディオン）
+  - <details>/<summary> によるネイティブ実装のため、JavaScript無効でも
+    開閉・閲覧が可能（アクセシブル）
+  - FAQPage構造化データ（JSON-LD）を出力
+{%- endcomment -%}
+
+<section class="hklp-section hklp-faq">
+  <div class="hklp-container">
+    <header class="hklp-section-head">
+      <h2 class="hklp-heading">{{ s.heading }}</h2>
+    </header>
+
+    <div class="hklp-faq__list">
+      {%- for block in section.blocks -%}
+        <details class="hklp-faq__item" {{ block.shopify_attributes }}{% if block.settings.open_default %} open{% endif %}>
+          <summary>
+            <span class="hklp-faq__q" aria-hidden="true">Q</span>
+            <span>{{ block.settings.question }}</span>
+            <span class="hklp-faq__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="hklp-faq__answer">
+            {{ block.settings.answer }}
+            {%- if block.settings.link != blank and block.settings.link_label != blank -%}
+              <p><a href="{{ block.settings.link }}">{{ block.settings.link_label }}</a></p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} FAQPage 構造化データ {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for block in section.blocks -%}
+          {
+            "@type": "Question",
+            "name": {{ block.settings.question | json }},
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": {{ block.settings.answer | strip_html | json }}
+            }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "LP：FAQ",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "よくあるご質問"
+    },
+    {
+      "type": "header",
+      "content": "色・余白"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "背景色",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "テキスト色",
+      "default": "#1c2b33"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "アクセントカラー",
+      "default": "#d9f1f7"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "上部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "下部余白",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "質問",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "質問"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "回答"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "関連リンク（任意）"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "リンクテキスト（任意）"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_default",
+          "label": "初期状態で開いておく",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP：FAQ",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "接触冷感とは何ですか？",
+            "answer": "<p>生地に触れたときに、ひんやりとした感触が得られる素材です。</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "夏の昼間でも散歩できますか？",
+            "answer": "<p>接触冷感素材は暑い時期の快適性をサポートするものですが、熱中症を防ぐものではありません。気温の高い時間帯を避け、こまめな水分補給を行ってください。</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "サイズ交換はできますか？",
+            "answer": "<p>返品・交換条件は、hakutakaストアの返品・交換規定をご確認ください。</p>",
+            "link_label": "返品・交換規定を見る"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "洗濯機で洗えますか？",
+            "answer": "<p>商品の洗濯表示をご確認のうえ、表示に従ってお手入れしてください。</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "どの犬種でも着用できますか？",
+            "answer": "<p>サイズ表をご確認のうえ、愛犬の実寸に合うサイズをお選びください。</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

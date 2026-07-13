@@ -1,0 +1,19 @@
+{% comment %}
+  hakutakagami LP 共通：セクションごとのCSS変数とアセット読み込み。
+  各LPセクションの先頭で {% render 'hakutakagami-section-style' %} を呼ぶ。
+  - コンテンツ幅はテーマ設定 page_width があれば継承（なければ1200px）
+  - 背景色／テキスト色／アクセントカラー／上下余白はセクション設定から反映
+{% endcomment %}
+
+{{ 'hakutakagami-lp.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --hklp-page-width: {{ settings.page_width | default: 1200 }}px;
+    --hklp-bg: {{ section.settings.bg_color | default: '#ffffff' }};
+    --hklp-text: {{ section.settings.text_color | default: '#1c2b33' }};
+    --hklp-accent: {{ section.settings.accent_color | default: '#d9f1f7' }};
+    --hklp-pad-top: {{ section.settings.padding_top | default: 64 }}px;
+    --hklp-pad-bottom: {{ section.settings.padding_bottom | default: 64 }}px;
+  }
+{% endstyle %}
