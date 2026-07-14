@@ -18,10 +18,11 @@
     --navy-deep: #071E30;
     --sun: #FFC93C;
     --sun-deep: #C98A00;
-    --mint: #3FC7A8;
-    --mint-deep: #1E8E76;
+    --mint: #BAD4D1;
+    --mint-deep: #5C817B;
     --pink: #F49AB8;
     --pink-deep: #D9568A;
+    --blue: #4F8FCC;
     --purple: #8E6FD6;
     --purple-deep: #5E43A8;
     --denim: #3E5F8A;
@@ -361,20 +362,35 @@
   }
   #dog-lp .design-block.c-mint::before { background: linear-gradient(90deg, var(--mint) 0%, var(--pink) 100%); }
   #dog-lp .design-block.c-purple::before { background: linear-gradient(90deg, var(--mint) 0%, var(--purple) 100%); }
-  #dog-lp .design-block.c-blue::before { background: linear-gradient(90deg, var(--sun) 0%, var(--denim) 100%); }
+  #dog-lp .design-block.c-blue::before { background: linear-gradient(90deg, var(--sun) 0%, var(--blue) 100%); }
   #dog-lp .design-block .tag {
     font-family: "Yomogi", cursive;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-size: 15px;
     font-weight: 400;
-    padding: 4px 15px;
+    padding: 5px 18px 5px 12px;
     border-radius: 999px;
-    color: #fff;
+    color: var(--ink);
+    background: #fff;
+    border: 1.5px solid var(--line);
+    box-shadow: 0 4px 12px rgba(10,44,66,0.08);
     margin-bottom: 10px;
   }
-  #dog-lp .c-mint .tag { background: linear-gradient(90deg, var(--mint-deep) 0%, var(--pink-deep) 100%); }
-  #dog-lp .c-purple .tag { background: linear-gradient(90deg, var(--mint-deep) 0%, var(--purple-deep) 100%); }
-  #dog-lp .c-blue .tag { background: linear-gradient(90deg, var(--sun-deep) 0%, var(--denim-deep) 100%); }
+  #dog-lp .tag .sw {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    flex: none;
+    box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(10,44,66,0.28);
+  }
+  #dog-lp .tag .sw + .sw { margin-left: -9px; }
+  #dog-lp .sw-mint { background: var(--mint); }
+  #dog-lp .sw-pink { background: var(--pink); }
+  #dog-lp .sw-purple { background: var(--purple); }
+  #dog-lp .sw-yellow { background: var(--sun); }
+  #dog-lp .sw-blue { background: var(--blue); }
 
   #dog-lp .design-head {
     text-align: center;
@@ -855,7 +871,7 @@
       <!-- ---- 涼ティー（ミント×ピンク） ---- -->
       <div class="design-block c-mint reveal">
         <div class="design-head">
-          <span class="tag">ミント&ピンク</span>
+          <span class="tag"><span class="sw sw-mint"></span><span class="sw sw-pink"></span>ミント&ピンク</span>
           <h3>涼ティー</h3>
           <p class="catch">夏の主役は、この一枚。</p>
         </div>
@@ -886,7 +902,7 @@
       <!-- ---- なんかちょっといい気分（ミント×パープル） ---- -->
       <div class="design-block c-purple reveal">
         <div class="design-head">
-          <span class="tag">ミント&パープル</span>
+          <span class="tag"><span class="sw sw-mint"></span><span class="sw sw-purple"></span>ミント&パープル</span>
           <h3>なんかちょっといい気分</h3>
           <p class="catch">着た瞬間、なんかちょっといい気分。</p>
         </div>
@@ -917,7 +933,7 @@
       <!-- ---- なんかちょっとかいてき（イエロー×ブルー） ---- -->
       <div class="design-block c-blue reveal">
         <div class="design-head">
-          <span class="tag">イエロー&ブルー</span>
+          <span class="tag"><span class="sw sw-yellow"></span><span class="sw sw-blue"></span>イエロー&ブルー</span>
           <h3>なんかちょっとかいてき</h3>
           <p class="catch">ひんやり着られて、なんかちょっと快適。</p>
         </div>
