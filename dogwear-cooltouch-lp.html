@@ -20,6 +20,8 @@
     --sun-deep: #C98A00;
     --mint: #3FC7A8;
     --mint-deep: #1E8E76;
+    --pink: #F49AB8;
+    --pink-deep: #D9568A;
     --purple: #8E6FD6;
     --purple-deep: #5E43A8;
     --denim: #3E5F8A;
@@ -357,9 +359,9 @@
     height: 5px;
     z-index: 2;
   }
-  #dog-lp .design-block.c-mint::before { background: var(--mint); }
-  #dog-lp .design-block.c-purple::before { background: var(--purple); }
-  #dog-lp .design-block.c-blue::before { background: var(--denim); }
+  #dog-lp .design-block.c-mint::before { background: linear-gradient(90deg, var(--mint) 0%, var(--pink) 100%); }
+  #dog-lp .design-block.c-purple::before { background: linear-gradient(90deg, var(--mint) 0%, var(--purple) 100%); }
+  #dog-lp .design-block.c-blue::before { background: linear-gradient(90deg, var(--sun) 0%, var(--denim) 100%); }
   #dog-lp .design-block .tag {
     font-family: "Yomogi", cursive;
     display: inline-block;
@@ -370,9 +372,9 @@
     color: #fff;
     margin-bottom: 10px;
   }
-  #dog-lp .c-mint .tag { background: var(--mint-deep); }
-  #dog-lp .c-purple .tag { background: var(--purple-deep); }
-  #dog-lp .c-blue .tag { background: var(--denim-deep); }
+  #dog-lp .c-mint .tag { background: linear-gradient(90deg, var(--mint-deep) 0%, var(--pink-deep) 100%); }
+  #dog-lp .c-purple .tag { background: linear-gradient(90deg, var(--mint-deep) 0%, var(--purple-deep) 100%); }
+  #dog-lp .c-blue .tag { background: linear-gradient(90deg, var(--sun-deep) 0%, var(--denim-deep) 100%); }
 
   #dog-lp .design-head {
     text-align: center;
@@ -853,7 +855,7 @@
       <!-- ---- 涼ティー（ミント×ピンク） ---- -->
       <div class="design-block c-mint reveal">
         <div class="design-head">
-          <span class="tag">ミント × ピンク</span>
+          <span class="tag">ミント&ピンク</span>
           <h3>涼ティー</h3>
           <p class="catch">夏の主役は、この一枚。</p>
         </div>
@@ -884,7 +886,7 @@
       <!-- ---- なんかちょっといい気分（ミント×パープル） ---- -->
       <div class="design-block c-purple reveal">
         <div class="design-head">
-          <span class="tag">ミント × パープル</span>
+          <span class="tag">ミント&パープル</span>
           <h3>なんかちょっといい気分</h3>
           <p class="catch">着た瞬間、なんかちょっといい気分。</p>
         </div>
@@ -915,7 +917,7 @@
       <!-- ---- なんかちょっとかいてき（イエロー×ブルー） ---- -->
       <div class="design-block c-blue reveal">
         <div class="design-head">
-          <span class="tag">イエロー × ブルー</span>
+          <span class="tag">イエロー&ブルー</span>
           <h3>なんかちょっとかいてき</h3>
           <p class="catch">ひんやり着られて、なんかちょっと快適。</p>
         </div>
