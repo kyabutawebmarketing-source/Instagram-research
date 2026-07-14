@@ -1,0 +1,1179 @@
+<!-- ================================================================
+  hakutaka × 加賀美健 コラボ 冷感接触ドッグウェア 特設LP（リッチ版）
+  Shopify「ページ」のHTML編集モードに、このコード全体を貼り付けてください。
+  商品画像・商品URLは hakutaka-shop.com のものを直接参照しています。
+================================================================= -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&family=Yomogi&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+  #dog-lp * { box-sizing: border-box; }
+  #dog-lp {
+    --paper: #FFFFFF;
+    --cream: #EFFBFC;
+    --bg-pale: #E4F5FB;
+    --ink: #12232E;
+    --ink-soft: #4C6675;
+    --sky: #2FB4E6;
+    --sky-deep: #0E7FAE;
+    --navy: #0A2C42;
+    --navy-deep: #071E30;
+    --sun: #FFC93C;
+    --sun-deep: #C98A00;
+    --mint: #3FC7A8;
+    --mint-deep: #1E8E76;
+    --purple: #8E6FD6;
+    --purple-deep: #5E43A8;
+    --denim: #3E5F8A;
+    --denim-deep: #223A57;
+    --line: #D8EFF6;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif;
+    line-height: 1.8;
+    font-size: 16px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  #dog-lp img { max-width: 100%; height: auto; display: block; }
+  #dog-lp .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; position: relative; }
+  #dog-lp h1, #dog-lp h2, #dog-lp h3 {
+    font-family: "Kiwi Maru", "Zen Kaku Gothic New", serif;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  #dog-lp .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    padding: 5px 16px;
+    border: 2px solid var(--sky-deep);
+    color: var(--sky-deep);
+    border-radius: 999px;
+    margin-bottom: 16px;
+    background: #fff;
+  }
+  #dog-lp .eyebrow::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sky-deep);
+    flex: none;
+  }
+  #dog-lp section { padding: 72px 0; position: relative; }
+  #dog-lp .center { text-align: center; }
+
+  /* ---- scroll reveal ---- */
+  #dog-lp .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  #dog-lp .reveal.in-view { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    #dog-lp .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ---- decorative halftone texture ---- */
+  #dog-lp .dot-field {
+    background-image: radial-gradient(rgba(14,127,174,0.16) 1.6px, transparent 1.8px);
+    background-size: 16px 16px;
+  }
+  #dog-lp .dot-field.on-navy {
+    background-image: radial-gradient(rgba(255,255,255,0.14) 1.6px, transparent 1.8px);
+  }
+
+  /* ---- sticker badges ---- */
+  #dog-lp .sticker {
+    font-family: "Yomogi", cursive;
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 10px 24px;
+    border-radius: 999px;
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(10,44,66,0.18);
+    white-space: nowrap;
+  }
+
+  /* ---- Hero ---- */
+  #dog-lp .hero {
+    padding: 48px 0 0;
+    background:
+      radial-gradient(circle, rgba(47,180,230,0.16) 1.8px, transparent 2px) 0 0/22px 22px,
+      linear-gradient(180deg, var(--bg-pale) 0%, var(--cream) 60%, #FFFFFF 100%);
+  }
+  #dog-lp .hero-inner {
+    text-align: center;
+    padding-bottom: 40px;
+  }
+  #dog-lp .hero-stickers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  #dog-lp .hero-stickers .sticker { position: absolute; pointer-events: auto; }
+  #dog-lp .hero-stickers .s1 { top: 6%; left: 4%; background: var(--mint-deep); transform: rotate(-9deg); }
+  #dog-lp .hero-stickers .s2 { top: 62%; left: 2%; background: var(--denim); transform: rotate(6deg); }
+  @media (max-width: 900px) { #dog-lp .hero-stickers { display: none; } }
+  #dog-lp .hero h1 {
+    font-size: clamp(30px, 5.4vw, 54px);
+    margin-bottom: 10px;
+  }
+  #dog-lp .hero h1 .line1 { display: block; transform: rotate(-1.4deg); }
+  #dog-lp .hero h1 .line2 {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  #dog-lp .hero h1 .line2::before {
+    content: "";
+    position: absolute;
+    left: -6px; right: -6px; bottom: 4px; height: 0.5em;
+    background: var(--sun);
+    opacity: 0.55;
+    z-index: -1;
+    transform: rotate(-1deg);
+    border-radius: 4px;
+  }
+  #dog-lp .hero p.lead {
+    font-size: 16px;
+    max-width: 520px;
+    margin: 0 auto 30px;
+    color: var(--ink-soft);
+  }
+  #dog-lp .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 118px;
+    height: 118px;
+    border-radius: 50%;
+    border: 3px solid var(--sky-deep);
+    background: #fff;
+    color: var(--sky-deep);
+    font-family: "Kiwi Maru", serif;
+    font-size: 17px;
+    font-weight: 700;
+    transform: rotate(-12deg);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
+    line-height: 1.3;
+    box-shadow: 0 8px 20px rgba(14,127,174,0.22);
+    animation: stamp-wobble 5s ease-in-out infinite;
+  }
+  @keyframes stamp-wobble {
+    0%, 100% { transform: rotate(-12deg); }
+    50% { transform: rotate(-6deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { #dog-lp .stamp { animation: none; } }
+  #dog-lp .btn {
+    display: inline-block;
+    background: var(--sky-deep);
+    color: #fff !important;
+    text-decoration: none;
+    padding: 15px 38px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    box-shadow: 0 10px 24px rgba(14,127,174,0.28);
+    transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+  #dog-lp .btn:hover { transform: translateY(-3px); background: var(--sky); box-shadow: 0 14px 28px rgba(14,127,174,0.32); }
+  #dog-lp .btn.outline {
+    background: transparent;
+    color: var(--sky-deep) !important;
+    border: 2px solid var(--sky-deep);
+    box-shadow: none;
+  }
+  #dog-lp .btn.outline:hover { background: var(--bg-pale); }
+
+  #dog-lp .hero-visual { position: relative; max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  #dog-lp .hero-visual figure {
+    position: relative;
+    margin: 0;
+    aspect-ratio: 16 / 10;
+    border-radius: 46px 46px 120px 46px;
+    overflow: hidden;
+    box-shadow: 0 24px 50px rgba(10,44,66,0.16);
+    transform: rotate(-0.6deg);
+    background: linear-gradient(135deg, var(--mint) 0%, var(--sky-deep) 100%);
+  }
+  #dog-lp .hero-visual figure img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4%;
+  }
+  #dog-lp .hero-visual .chip-row {
+    position: absolute;
+    left: 32px;
+    bottom: -18px;
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+  }
+  #dog-lp .hero-visual .chip {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 6px 14px rgba(10,44,66,0.22);
+  }
+  #dog-lp .hero-visual .chip.c-mint { background: var(--mint); }
+  #dog-lp .hero-visual .chip.c-pink { background: #F49AB8; }
+  #dog-lp .hero-visual .chip.c-purple { background: var(--purple); }
+  #dog-lp .hero-visual .chip.c-yellow { background: var(--sun); }
+  #dog-lp .hero-visual .chip.c-blue { background: var(--denim); }
+  #dog-lp .hero-cta-wrap { text-align: center; margin-top: 40px; }
+  #dog-lp .hero-cta-wide {
+    display: block;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 20px 32px;
+    font-size: 18px;
+  }
+  @media (max-width: 600px) {
+    #dog-lp .hero-cta-wrap { margin-top: 30px; }
+    #dog-lp .hero-cta-wide { padding: 17px 24px; font-size: 16px; }
+  }
+
+  /* ---- Marquee ---- */
+  #dog-lp .marquee {
+    background: var(--sky-deep);
+    color: #fff;
+    overflow: hidden;
+    padding: 12px 0;
+    margin-top: 44px;
+  }
+  #dog-lp .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 26s linear infinite;
+  }
+  #dog-lp .marquee-track span {
+    font-family: "Kiwi Maru", serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    padding: 0 22px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.35);
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { #dog-lp .marquee-track { animation: none; } }
+
+  /* ---- Concept ---- */
+  #dog-lp .concept-mark {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: "Kiwi Maru", serif;
+    font-size: clamp(120px, 22vw, 220px);
+    color: var(--bg-pale);
+    z-index: 0;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+  #dog-lp .concept-body { position: relative; z-index: 1; }
+
+  /* ---- Concept / Artist ---- */
+  #dog-lp .split {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (max-width: 720px) {
+    #dog-lp .split { grid-template-columns: 1fr; }
+  }
+  #dog-lp .artist-name {
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--sky-deep);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  #dog-lp .artist-copy h2 { font-size: clamp(28px, 3.4vw, 38px); }
+  #dog-lp .artist-copy p {
+    font-size: 18px;
+    line-height: 1.95;
+    color: var(--ink-soft);
+    max-width: 46em;
+  }
+  #dog-lp .artist-sign {
+    font-family: "Yomogi", cursive;
+    font-size: 24px;
+    color: var(--sky-deep);
+    margin-top: 20px;
+    transform: rotate(-2deg);
+  }
+  #dog-lp .artist-photo-wrap { position: relative; max-width: 220px; margin: 0 auto; }
+  #dog-lp .artist-photo-wrap img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transform: rotate(2deg);
+    box-shadow: 0 16px 30px rgba(10,44,66,0.18);
+    border: 8px solid #fff;
+  }
+  #dog-lp .artist-photo-wrap::before,
+  #dog-lp .artist-photo-wrap::after {
+    content: "";
+    position: absolute;
+    width: 44px; height: 18px;
+    background: rgba(255,201,60,0.75);
+    box-shadow: 0 3px 8px rgba(10,44,66,0.15);
+  }
+  #dog-lp .artist-photo-wrap::before { top: -9px; left: 14px; transform: rotate(-8deg); }
+  #dog-lp .artist-photo-wrap::after { bottom: -8px; right: 10px; transform: rotate(6deg); background: rgba(63,199,168,0.7); }
+  @media (max-width: 720px) {
+    #dog-lp .artist-photo-wrap { max-width: 180px; }
+  }
+
+  /* ---- Design blocks ---- */
+  #dog-lp .design-block {
+    position: relative;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 12px 28px rgba(10,44,66,0.07);
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  #dog-lp .design-block:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(10,44,66,0.13);
+  }
+  #dog-lp .design-block::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    z-index: 2;
+  }
+  #dog-lp .design-block.c-mint::before { background: var(--mint); }
+  #dog-lp .design-block.c-purple::before { background: var(--purple); }
+  #dog-lp .design-block.c-blue::before { background: var(--denim); }
+  #dog-lp .design-block .tag {
+    font-family: "Yomogi", cursive;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 4px 15px;
+    border-radius: 999px;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  #dog-lp .c-mint .tag { background: var(--mint-deep); }
+  #dog-lp .c-purple .tag { background: var(--purple-deep); }
+  #dog-lp .c-blue .tag { background: var(--denim-deep); }
+
+  #dog-lp .design-head {
+    text-align: center;
+    padding: 34px 24px 4px;
+  }
+  #dog-lp .design-head h3 { font-size: clamp(22px, 3vw, 30px); margin: 0 0 6px; }
+  #dog-lp .design-head .catch {
+    font-family: "Kiwi Maru", serif;
+    color: var(--ink-soft);
+    margin: 0;
+    font-size: 16px;
+  }
+  #dog-lp .design-block-body { padding: 20px 28px 30px; }
+  #dog-lp .product-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) {
+    #dog-lp .product-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+  }
+  #dog-lp .product-card {
+    background: var(--cream);
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--ink);
+    display: block;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  #dog-lp .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(10,44,66,0.12); }
+  #dog-lp .pc-imgwrap {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+  #dog-lp .pc-imgwrap img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform .5s ease;
+  }
+  #dog-lp .product-card:hover .pc-imgwrap img { transform: scale(1.05); }
+  #dog-lp .color-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.92);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  #dog-lp .product-card .name { font-weight: 700; margin-bottom: 4px; }
+  #dog-lp .product-card .price { color: var(--ink-soft); margin-bottom: 12px; font-size: 13px; }
+
+  /* ---- Feature (接触冷感) ---- */
+  #dog-lp .feature-section { background: var(--cream); }
+  #dog-lp .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+  }
+  @media (max-width: 720px) {
+    #dog-lp .feature-grid { grid-template-columns: 1fr; }
+  }
+  #dog-lp .feature-card {
+    background: var(--paper);
+    border-radius: 22px;
+    padding: 30px 26px;
+    border: 1px solid var(--line);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  #dog-lp .feature-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(10,44,66,0.1); }
+  #dog-lp .feature-icon {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--bg-pale);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  #dog-lp .feature-icon svg { width: 26px; height: 26px; }
+
+  /* ---- All products ---- */
+  #dog-lp .all-products {
+    background: linear-gradient(155deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: #fff;
+    border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  #dog-lp .all-products .dot-field { position: absolute; inset: 0; }
+  #dog-lp .all-products .wrap { z-index: 1; }
+  #dog-lp .sparkle {
+    position: absolute;
+    width: 18px; height: 18px;
+    background: var(--sun);
+    clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
+    opacity: 0.85;
+  }
+  #dog-lp .all-products .sparkle.sp1 { top: 8%; left: 6%; }
+  #dog-lp .all-products .sparkle.sp2 { bottom: 10%; right: 8%; width: 12px; height: 12px; background: var(--sky); }
+  #dog-lp .all-products .sparkle.sp3 { top: 14%; right: 14%; width: 10px; height: 10px; background: var(--mint); }
+  #dog-lp .all-products h2 { color: #fff; }
+  #dog-lp .all-products .lead { color: #A9D6EA; }
+  #dog-lp .all-products .eyebrow { border-color: #fff; color: #fff; background: transparent; }
+  #dog-lp .all-products .eyebrow::before { background: #fff; }
+  #dog-lp .grid6 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 720px) {
+    #dog-lp .grid6 { grid-template-columns: repeat(2, 1fr); }
+  }
+  #dog-lp .grid6 .product-card {
+    background: rgba(255,255,255,0.08);
+  }
+  #dog-lp .grid6 .product-card:hover { background: rgba(255,255,255,0.14); }
+  #dog-lp .grid6 .name, #dog-lp .grid6 .price { color: #fff; }
+  #dog-lp .grid6 .price { color: #A9D6EA; }
+  #dog-lp .grid6 .product-card { border: 1px solid rgba(255,255,255,0.14); }
+
+  /* ---- FAQ ---- */
+  #dog-lp details {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  #dog-lp details[open] {
+    border-left-color: var(--sky-deep);
+    background: var(--cream);
+  }
+  #dog-lp summary {
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+  #dog-lp summary::-webkit-details-marker { display: none; }
+  #dog-lp summary::after {
+    content: "＋";
+    float: right;
+    display: inline-block;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--sky-deep);
+    transition: transform .25s ease;
+  }
+  #dog-lp details[open] summary::after { transform: rotate(45deg); }
+  #dog-lp details p { margin: 12px 0 0; color: var(--ink-soft); }
+
+  /* ---- Footer CTA ---- */
+  #dog-lp .final-cta {
+    text-align: center;
+    padding: 80px 0;
+    position: relative;
+  }
+  #dog-lp .final-cta-box {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 56px 32px;
+    border-radius: 32px;
+    border: 2px dashed var(--sky-deep);
+    background:
+      radial-gradient(circle at 12% 20%, rgba(255,201,60,0.35) 0 6px, transparent 7px),
+      radial-gradient(circle at 88% 24%, rgba(63,199,168,0.35) 0 5px, transparent 6px),
+      radial-gradient(circle at 20% 82%, rgba(142,111,214,0.3) 0 5px, transparent 6px),
+      radial-gradient(circle at 80% 84%, rgba(47,180,230,0.35) 0 6px, transparent 7px),
+      var(--cream);
+  }
+
+  /* ---- Category links (shop directory) ---- */
+  #dog-lp .shop-links { background: var(--cream); }
+  #dog-lp .shop-links-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-top: 32px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (max-width: 560px) {
+    #dog-lp .shop-links-grid { grid-template-columns: 1fr; }
+  }
+  #dog-lp .shop-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 24px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    box-shadow: 0 6px 16px rgba(10,44,66,0.05);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  #dog-lp .shop-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(10,44,66,0.12);
+    border-color: var(--sky);
+  }
+  #dog-lp .shop-link.is-wide { grid-column: 1 / -1; }
+  @media (max-width: 560px) {
+    #dog-lp .shop-link.is-wide { grid-column: auto; }
+  }
+  #dog-lp .shop-link .sl-dot {
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--bg-pale);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sky-deep);
+    font-size: 13px;
+  }
+  #dog-lp .shop-link.is-wide .sl-dot { background: var(--sky-deep); color: #fff; }
+  #dog-lp .shop-link .sl-name { flex: 1; }
+  #dog-lp .shop-link .sl-arrow {
+    flex: none;
+    color: var(--sky-deep);
+    font-size: 18px;
+    transition: transform .2s ease;
+  }
+  #dog-lp .shop-link:hover .sl-arrow { transform: translateX(4px); }
+
+  /* ---- Polish ---- */
+  @keyframes heroRise { from { opacity: 0; transform: translateY(16px); } }
+  @media (prefers-reduced-motion: no-preference) {
+    #dog-lp .hero h1,
+    #dog-lp .hero p.lead,
+    #dog-lp .hero .eyebrow,
+    #dog-lp .hero-visual,
+    #dog-lp .hero-cta-wrap { animation: heroRise .7s ease backwards; }
+    #dog-lp .hero p.lead { animation-delay: .12s; }
+    #dog-lp .hero .eyebrow { animation-delay: .22s; }
+    #dog-lp .hero-visual { animation-delay: .32s; }
+    #dog-lp .hero-cta-wrap { animation-delay: .46s; }
+  }
+  #dog-lp .wave-divider { line-height: 0; }
+  #dog-lp .wave-divider svg { display: block; width: 100%; height: 42px; }
+  #dog-lp #products { scroll-margin-top: 20px; }
+  #dog-lp .price { font-variant-numeric: tabular-nums; }
+  #dog-lp .artist-photo-wrap.no-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--bg-pale) 0%, var(--sky) 100%);
+    border: 8px solid #fff;
+    transform: rotate(2deg);
+    box-shadow: 0 16px 30px rgba(10,44,66,0.18);
+  }
+  #dog-lp a:focus-visible,
+  #dog-lp button:focus-visible,
+  #dog-lp summary:focus-visible {
+    outline: 3px solid var(--sky);
+    outline-offset: 3px;
+  }
+
+  /* ---- Responsive (tablet / mobile) ---- */
+  @media (max-width: 600px) {
+    #dog-lp { font-size: 15px; }
+    #dog-lp .wrap { padding: 0 16px; }
+    #dog-lp section { padding: 44px 0; }
+    #dog-lp h2 { font-size: 22px; }
+    #dog-lp h3 { font-size: 18px; }
+
+    #dog-lp .hero { padding-top: 28px; }
+    #dog-lp .hero p.lead { font-size: 14px; padding: 0 12px; }
+    #dog-lp .stamp {
+      width: 64px;
+      height: 64px;
+      font-size: 10px;
+      top: 8px;
+      right: 12px;
+      border-width: 2px;
+    }
+    #dog-lp .hero-visual figure { border-radius: 28px 28px 70px 28px; }
+    #dog-lp .hero-visual .chip-row { left: 16px; bottom: -14px; }
+    #dog-lp .hero-visual .chip { width: 26px; height: 26px; }
+    #dog-lp .marquee-track span { font-size: 12px; padding: 0 14px; }
+    #dog-lp .wave-divider svg { height: 26px; }
+
+    #dog-lp .concept-mark { top: -14px; }
+
+    #dog-lp .btn { padding: 13px 28px; font-size: 14px; }
+
+    #dog-lp .design-block { border-radius: 16px; margin-bottom: 22px; }
+    #dog-lp .design-head { padding: 26px 18px 2px; }
+    #dog-lp .design-block-body { padding: 16px 16px 22px; }
+    #dog-lp .product-card { padding: 12px; }
+
+    #dog-lp .feature-grid { gap: 16px; margin-top: 26px; }
+    #dog-lp .feature-card { padding: 22px 20px; }
+
+    #dog-lp .all-products { border-radius: 24px; }
+    #dog-lp .grid6 { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 24px; }
+    #dog-lp .grid6 .product-card { padding: 10px; }
+    #dog-lp .grid6 .name { font-size: 13px; }
+
+    #dog-lp details { padding: 14px 16px; }
+    #dog-lp .final-cta-box { padding: 40px 22px; border-radius: 24px; }
+  }
+
+  @media (max-width: 380px) {
+    #dog-lp .stamp { width: 54px; height: 54px; font-size: 9px; }
+  }
+
+  /* ---- CTA: 目立つ黄緑バージョン ---- */
+  #dog-lp .btn.cta-lime {
+    background: #74BE00;
+    color: #fff !important;
+    text-shadow: 0 1px 2px rgba(20,60,10,0.45), 0 2px 8px rgba(20,60,10,0.25);
+    box-shadow: 0 12px 26px rgba(116,190,0,0.40);
+  }
+  #dog-lp .btn.cta-lime:hover {
+    background: #83D30C;
+    box-shadow: 0 16px 30px rgba(116,190,0,0.46);
+  }
+
+  /* ---- スマホ用 LINE誘導フローティングバナー ---- */
+  #dog-lp .line-float { display: none; }
+  @media (max-width: 767px) {
+    #dog-lp .line-float {
+      display: block;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      line-height: 0;
+      box-shadow: 0 -4px 16px rgba(10,44,66,0.20);
+    }
+    #dog-lp .line-float-link { display: block; }
+    #dog-lp .line-float-link img { width: 100%; height: auto; display: block; }
+    #dog-lp .line-close {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 16px;
+      line-height: 26px;
+      text-align: center;
+      cursor: pointer;
+      z-index: 2;
+    }
+  }
+</style>
+<noscript><style>#dog-lp .reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+
+<div id="dog-lp">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-inner" style="position:relative;">
+      <div class="hero-stickers">
+        <span class="sticker s1">COOL TOUCH</span>
+        <span class="sticker s2">限定コラボ</span>
+      </div>
+      <div class="stamp">この夏<br>限定</div>
+      <h1><span class="line1">愛犬に涼しさを。</span><span class="line2">現代アートドッグウェア！</span></h1>
+      <p class="lead">現代美術家・加賀美健 × hakutaka。<br>この夏だけの冷感接触コレクションが登場。</p>
+      <div><span class="eyebrow">SUMMER LIMITED COLLABORATION</span></div>
+    </div>
+
+    <div class="hero-visual">
+      <figure>
+        <img src="https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715" alt="加賀美健コラボ 冷感接触ドッグウェアを着た愛犬" loading="lazy">
+      </figure>
+      <div class="chip-row">
+        <span class="chip c-mint"></span>
+        <span class="chip c-pink"></span>
+        <span class="chip c-purple"></span>
+        <span class="chip c-yellow"></span>
+        <span class="chip c-blue"></span>
+      </div>
+    </div>
+
+    <div class="wrap hero-cta-wrap">
+      <a href="#products" class="btn hero-cta-wide cta-lime">限定商品をチェック⇒</a>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>SUMMER LIMITED COLLABORATION</span>
+        <span>加賀美健 × hakutaka</span>
+        <span>接触冷感 COOL TOUCH</span>
+        <span>数量限定</span>
+        <span>SUMMER LIMITED COLLABORATION</span>
+        <span>加賀美健 × hakutaka</span>
+        <span>接触冷感 COOL TOUCH</span>
+        <span>数量限定</span>
+      </div>
+    </div>
+
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 1440 48" preserveAspectRatio="none"><path d="M0,24 C240,48 480,4 720,18 C960,32 1200,6 1440,24 L1440,0 L0,0 Z" style="fill:var(--sky-deep);"></path></svg>
+    </div>
+  </section>
+
+  <!-- ============ コンセプト ============ -->
+  <section>
+    <div class="wrap center reveal" style="max-width:640px;">
+      <span class="concept-mark">涼</span>
+      <div class="concept-body">
+        <span class="eyebrow">CONCEPT</span>
+        <h2>アートも、涼しさも、妥協しない。</h2>
+        <p>
+          hakutakaが90年以上培ってきたインナー生地の技術と、現代美術家・加賀美健氏のユーモラスな作品世界がひとつになりました。
+          綿とナイロンをハイブリッドした接触冷感素材で、暑さの厳しい季節も愛犬の体をやさしく涼しく。
+          見て楽しい、着て気持ちいい、この夏だけのドッグウェアです。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ アーティスト紹介 ============ -->
+  <section style="background:var(--bg-pale);">
+    <div class="wrap split">
+      <div class="reveal artist-copy">
+        <div class="artist-name">ARTIST</div>
+        <h2>加賀美健</h2>
+        <p>
+          国内外の展覧会で作品を発表する現代美術家。文字やフォントをモチーフにした、
+          くすっと笑えるユーモラスな作風で知られる。今回、愛犬のための
+          オリジナルデザインを描き下ろし。
+        </p>
+        <div class="artist-sign">Ken Kagami</div>
+      </div>
+      <div class="artist-photo-wrap reveal no-photo"></div>
+    </div>
+  </section>
+
+  <!-- ============ デザイン紹介 3ブロック ============ -->
+  <section id="products">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:44px;">
+        <span class="eyebrow">3 DESIGNS</span>
+        <h2>3つのデザイン、冷感ドッグウェア</h2>
+      </div>
+
+      <!-- ---- 涼ティー（ミント×ピンク） ---- -->
+      <div class="design-block c-mint reveal">
+        <div class="design-head">
+          <span class="tag">ミント × ピンク</span>
+          <h3>涼ティー</h3>
+          <p class="catch">夏の主役は、この一枚。</p>
+        </div>
+        <div class="design-block-body">
+          <div class="product-row">
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
+              <div class="pc-imgwrap">
+                <span class="color-label">ミント</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715" alt="涼ティー ミント" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">涼ティー ミント</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
+              <div class="pc-imgwrap">
+                <span class="color-label">ピンク</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715" alt="涼ティー ピンク" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">涼ティー ピンク</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- なんかちょっといい気分（ミント×パープル） ---- -->
+      <div class="design-block c-purple reveal">
+        <div class="design-head">
+          <span class="tag">ミント × パープル</span>
+          <h3>なんかちょっといい気分</h3>
+          <p class="catch">着た瞬間、なんかちょっといい気分。</p>
+        </div>
+        <div class="design-block-body">
+          <div class="product-row">
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+              <div class="pc-imgwrap">
+                <span class="color-label">ミント</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715" alt="なんかちょっといい気分 ミント" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">なんかちょっといい気分 ミント</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+              <div class="pc-imgwrap">
+                <span class="color-label">パープル</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715" alt="なんかちょっといい気分 パープル" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">なんかちょっといい気分 パープル</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- なんかちょっとかいてき（イエロー×ブルー） ---- -->
+      <div class="design-block c-blue reveal">
+        <div class="design-head">
+          <span class="tag">イエロー × ブルー</span>
+          <h3>なんかちょっとかいてき</h3>
+          <p class="catch">ひんやり着られて、なんかちょっと快適。</p>
+        </div>
+        <div class="design-block-body">
+          <div class="product-row">
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+              <div class="pc-imgwrap">
+                <span class="color-label">イエロー</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715" alt="なんかちょっとかいてき イエロー" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">なんかちょっとかいてき イエロー</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+              <div class="pc-imgwrap">
+                <span class="color-label">ブルー</span>
+                <img src="https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715" alt="なんかちょっとかいてき ブルー" width="800" height="800" loading="lazy">
+              </div>
+              <div class="name">なんかちょっとかいてき ブルー</div>
+              <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
+              <span class="btn outline">詳しく見る</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 機能訴求（接触冷感の科学） ============ -->
+  <section class="feature-section">
+    <div class="wrap">
+      <div class="center reveal" style="margin-bottom:8px;">
+        <span class="eyebrow">WHY COOL?</span>
+        <h2>「接触冷感」って、なぜ涼しいの？</h2>
+      </div>
+      <p class="center reveal" style="max-width:560px;margin:0 auto;color:var(--ink-soft);">
+        冷やしているのではなく、触れた瞬間に体の熱が生地へ移動する「熱伝導」の仕組み。
+        金属のドアノブが冷たく感じるのと同じ原理です。
+      </p>
+      <div class="feature-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E7FAE" stroke-width="2" stroke-linecap="round">
+              <path d="M3 8c2-2 4 2 6 0s4-2 6 0 4-2 6 0" />
+              <path d="M3 14c2-2 4 2 6 0s4-2 6 0 4-2 6 0" />
+            </svg>
+          </div>
+          <h3 style="font-size:18px;">ナイロンの放熱力</h3>
+          <p>熱伝導率の高いナイロンが、触れた瞬間に体表の熱を素早く逃がします。</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E7FAE" stroke-width="2" stroke-linejoin="round">
+              <path d="M12 3s7 8.2 7 12.8A7 7 0 0 1 5 15.8C5 11.2 12 3 12 3z" />
+            </svg>
+          </div>
+          <h3 style="font-size:18px;">綿のやさしさ</h3>
+          <p>汗や皮脂をしっかり吸水。デリケートな愛犬の肌をやさしく守ります。</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E7FAE" stroke-width="2" stroke-linecap="round">
+              <path d="M3 18c4-10 14-10 18 0" stroke-dasharray="2.4 3.2" />
+              <circle cx="21" cy="18" r="1.4" fill="#0E7FAE" stroke="none" />
+            </svg>
+          </div>
+          <h3 style="font-size:18px;">老舗の縫製力</h3>
+          <p>90年以上のインナー技術による、突っ張らないストレッチ仕立て。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 商品一覧（全6点） ============ -->
+  <section class="all-products">
+    <div class="dot-field on-navy"></div>
+    <span class="sparkle sp1"></span>
+    <span class="sparkle sp2"></span>
+    <span class="sparkle sp3"></span>
+    <div class="wrap center reveal">
+      <span class="eyebrow" style="border-color:#fff;">ALL ITEMS</span>
+      <h2>商品一覧（全6色）</h2>
+      <p class="lead">すべて ¥2,480（税込）／サイズ：S・M・L・2L</p>
+
+      <div class="grid6">
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
+          <div class="pc-imgwrap">
+            <span class="color-label">ミント</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715" alt="涼ティー ミント" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">涼ティー ミント</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
+          <div class="pc-imgwrap">
+            <span class="color-label">ピンク</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715" alt="涼ティー ピンク" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">涼ティー ピンク</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+          <div class="pc-imgwrap">
+            <span class="color-label">ミント</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715" alt="なんかちょっといい気分 ミント" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">なんかちょっといい気分 ミント</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+          <div class="pc-imgwrap">
+            <span class="color-label">パープル</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715" alt="なんかちょっといい気分 パープル" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">なんかちょっといい気分 パープル</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+          <div class="pc-imgwrap">
+            <span class="color-label">イエロー</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715" alt="なんかちょっとかいてき イエロー" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">なんかちょっとかいてき イエロー</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+          <div class="pc-imgwrap">
+            <span class="color-label">ブルー</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715" alt="なんかちょっとかいてき ブルー" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">なんかちょっとかいてき ブルー</div>
+          <div class="price">¥2,480（税込）</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ カテゴリーリンク ============ -->
+  <section class="shop-links">
+    <div class="wrap center reveal">
+      <span class="eyebrow">SHOP MORE</span>
+      <h2>ほかのアイテムもチェック</h2>
+      <div class="shop-links-grid">
+        <a class="shop-link is-wide" href="https://hakutaka-shop.com/products/pets04">
+          <span class="sl-dot">▼</span>
+          <span class="sl-name">涼ティー（ミント／ピンク）</span>
+          <span class="sl-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="shop-link is-wide" href="https://hakutaka-shop.com/products/pets05">
+          <span class="sl-dot">▼</span>
+          <span class="sl-name">なんかちょっといい気分／かいてき</span>
+          <span class="sl-arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="shop-link is-wide" href="https://hakutaka-shop.com">
+          <span class="sl-dot">▼</span>
+          <span class="sl-name">hakutaka オンラインストア TOP</span>
+          <span class="sl-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section>
+    <div class="wrap" style="max-width:760px;">
+      <div class="center reveal" style="margin-bottom:32px;">
+        <span class="eyebrow">FAQ</span>
+        <h2>よくある質問</h2>
+      </div>
+
+      <details>
+        <summary>サイズはどう選べばいいですか？</summary>
+        <p>S・M・L・2Lの4サイズをご用意しています。愛犬の首まわり・胴まわり・着丈を計測のうえ、各商品ページのサイズ表を目安にお選びください。迷われる場合は、ゆとりのある一回り大きめがおすすめです。</p>
+      </details>
+      <details>
+        <summary>お手入れ方法を教えてください。</summary>
+        <p>ご家庭の洗濯機で洗えます。素材の風合いを保つため、洗濯ネットに入れての洗濯を推奨しています。</p>
+      </details>
+      <details>
+        <summary>接触冷感の効果はどのくらい続きますか？</summary>
+        <p>触れた瞬間のひんやり感は、生地が体温と同じになるまで持続します。動いて生地がずれるたびに冷たさを感じられ、暑い季節のお散歩やお出かけにおすすめです。</p>
+      </details>
+      <details>
+        <summary>再入荷の予定はありますか？</summary>
+        <p>今回は数量限定のコラボ企画のため、次回入荷は未定です。お早めのご購入をおすすめします。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ フッターCTA ============ -->
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="final-cta-box reveal">
+        <h2>この夏だけの1枚を、今のうちに。</h2>
+        <p style="margin-bottom:28px;color:var(--ink-soft);">数量限定のコラボレーションです。</p>
+        <a href="#products" class="btn">商品一覧を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ スマホ用 LINE誘導フローティングバナー ============ -->
+  <div class="line-float">
+    <a class="line-float-link" href="https://lin.ee/VQpy5Wq" target="_blank" rel="noopener">
+      <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/hakutakagami_LINE_1.png?v=1783071656" alt="LINE友だち追加はこちら">
+    </a>
+    <button type="button" class="line-close" aria-label="バナーを閉じる">×</button>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var revealEls = document.querySelectorAll('#dog-lp .reveal');
+  function showAllReveals() {
+    revealEls.forEach(function (el) { el.classList.add('in-view'); });
+  }
+  try {
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      showAllReveals();
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+    }
+  } catch (err) {
+    showAllReveals();
+  }
+  // safety net: never let content stay invisible if something above misbehaves
+  setTimeout(showAllReveals, 4000);
+
+  document.querySelectorAll('#dog-lp a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
+  // LINE誘導フローティングバナー：表示中は本文下部に余白を確保
+  var lineFloat = document.querySelector('#dog-lp .line-float');
+  if (lineFloat) {
+    var lpRoot = document.getElementById('dog-lp');
+    var adjustLinePad = function () {
+      if (getComputedStyle(lineFloat).display !== 'none') {
+        lpRoot.style.paddingBottom = lineFloat.offsetHeight + 'px';
+      } else {
+        lpRoot.style.paddingBottom = '';
+      }
+    };
+    var lfImg = lineFloat.querySelector('img');
+    if (lfImg) {
+      if (lfImg.complete) adjustLinePad();
+      lfImg.addEventListener('load', adjustLinePad);
+    }
+    window.addEventListener('load', adjustLinePad);
+    window.addEventListener('resize', adjustLinePad);
+    adjustLinePad();
+    var lineClose = lineFloat.querySelector('.line-close');
+    if (lineClose) {
+      lineClose.addEventListener('click', function () {
+        lineFloat.style.display = 'none';
+        lpRoot.style.paddingBottom = '';
+      });
+    }
+  }
+})();
+</script>
