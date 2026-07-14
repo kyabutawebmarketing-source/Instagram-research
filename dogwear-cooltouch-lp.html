@@ -127,6 +127,7 @@
     margin-bottom: 10px;
   }
   #dog-lp .hero h1 .line1 { display: block; transform: rotate(-1.4deg); }
+  #dog-lp .hero h1 .line2-wrap { display: block; }
   #dog-lp .hero h1 .line2 {
     display: inline-block;
     position: relative;
@@ -240,6 +241,18 @@
     padding: 20px 32px;
     font-size: 18px;
   }
+  /* LINE誘導バナー（CTA下） */
+  #dog-lp .line-banner {
+    display: block;
+    max-width: 620px;
+    margin: 18px auto 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(10,44,66,0.12);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  #dog-lp .line-banner:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(10,44,66,0.16); }
+  #dog-lp .line-banner img { width: 100%; height: auto; display: block; }
   @media (max-width: 600px) {
     #dog-lp .hero-cta-wrap { margin-top: 30px; }
     #dog-lp .hero-cta-wide { padding: 17px 24px; font-size: 16px; }
@@ -784,39 +797,6 @@
     box-shadow: 0 16px 30px rgba(116,190,0,0.46);
   }
 
-  /* ---- スマホ用 LINE誘導フローティングバナー ---- */
-  #dog-lp .line-float { display: none; }
-  @media (max-width: 767px) {
-    #dog-lp .line-float {
-      display: block;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 9999;
-      line-height: 0;
-      box-shadow: 0 -4px 16px rgba(10,44,66,0.20);
-    }
-    #dog-lp .line-float-link { display: block; }
-    #dog-lp .line-float-link img { width: 100%; height: auto; display: block; }
-    #dog-lp .line-close {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 26px;
-      height: 26px;
-      padding: 0;
-      border: none;
-      border-radius: 50%;
-      background: rgba(0,0,0,0.55);
-      color: #fff;
-      font-size: 16px;
-      line-height: 26px;
-      text-align: center;
-      cursor: pointer;
-      z-index: 2;
-    }
-  }
 </style>
 <noscript><style>#dog-lp .reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 
@@ -848,7 +828,7 @@
         <span class="sticker s2">限定コラボ</span>
       </div>
       <div class="stamp">この夏<br>限定</div>
-      <h1><span class="line1">愛犬に涼しさを。</span><span class="line2">現代アートドッグウェア！</span></h1>
+      <h1><span class="line1">愛犬に涼しさを。</span><span class="line2-wrap"><span class="line2">現代アート</span></span><span class="line2-wrap"><span class="line2">ドッグウェア</span></span></h1>
       <p class="lead">現代美術家・加賀美健 × hakutaka。<br>この夏だけの冷感接触コレクションが登場。</p>
       <div><span class="eyebrow">SUMMER LIMITED COLLABORATION</span></div>
     </div>
@@ -868,6 +848,9 @@
 
     <div class="wrap hero-cta-wrap">
       <a href="#products" class="btn hero-cta-wide cta-lime">限定商品をチェック⇒</a>
+      <a class="line-banner" href="https://lin.ee/VQpy5Wq" target="_blank" rel="noopener">
+        <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/hakutakagami_LINE_1.png?v=1783071656" alt="LINE友だち追加はこちら" loading="lazy">
+      </a>
     </div>
 
     <div class="marquee" aria-hidden="true">
@@ -1261,13 +1244,6 @@
     </div>
   </section>
 
-  <!-- ============ スマホ用 LINE誘導フローティングバナー ============ -->
-  <div class="line-float">
-    <a class="line-float-link" href="https://lin.ee/VQpy5Wq" target="_blank" rel="noopener">
-      <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/hakutakagami_LINE_1.png?v=1783071656" alt="LINE友だち追加はこちら">
-    </a>
-    <button type="button" class="line-close" aria-label="バナーを閉じる">×</button>
-  </div>
 
 </div>
 
@@ -1311,33 +1287,5 @@
       target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
     });
   });
-
-  // LINE誘導フローティングバナー：表示中は本文下部に余白を確保
-  var lineFloat = document.querySelector('#dog-lp .line-float');
-  if (lineFloat) {
-    var lpRoot = document.getElementById('dog-lp');
-    var adjustLinePad = function () {
-      if (getComputedStyle(lineFloat).display !== 'none') {
-        lpRoot.style.paddingBottom = lineFloat.offsetHeight + 'px';
-      } else {
-        lpRoot.style.paddingBottom = '';
-      }
-    };
-    var lfImg = lineFloat.querySelector('img');
-    if (lfImg) {
-      if (lfImg.complete) adjustLinePad();
-      lfImg.addEventListener('load', adjustLinePad);
-    }
-    window.addEventListener('load', adjustLinePad);
-    window.addEventListener('resize', adjustLinePad);
-    adjustLinePad();
-    var lineClose = lineFloat.querySelector('.line-close');
-    if (lineClose) {
-      lineClose.addEventListener('click', function () {
-        lineFloat.style.display = 'none';
-        lpRoot.style.paddingBottom = '';
-      });
-    }
-  }
 })();
 </script>
