@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "main": {
+      "type": "dogwear-cooltouch-lp"
+    }
+  },
+  "order": ["main"]
+}
