@@ -1,7 +1,6 @@
 {% comment %}
   冷感接触ドッグウェア 特設LP セクション
   hakutaka × 加賀美健 コラボ / Online Store 2.0 section
-  テーマの sections/ にアップロードして使用します。
 {% endcomment %}
 {% raw %}
 <!-- ================================================================
@@ -76,11 +75,14 @@
   #dog-lp section { padding: 72px 0; position: relative; }
   #dog-lp .center { text-align: center; }
 
-  /* ---- scroll reveal ---- */
-  #dog-lp .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-  #dog-lp .reveal.in-view { opacity: 1; transform: translateY(0); }
+  /* ---- scroll reveal ----
+     既定では常に表示。JSが動く場合のみ #dog-lp に .js-on が付き、
+     フェードイン演出を有効化する（JSが無効/ブロックされても本文は必ず表示される） */
+  #dog-lp .reveal { opacity: 1; transform: none; }
+  #dog-lp.js-on .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  #dog-lp.js-on .reveal.in-view { opacity: 1; transform: translateY(0); }
   @media (prefers-reduced-motion: reduce) {
-    #dog-lp .reveal { opacity: 1; transform: none; transition: none; }
+    #dog-lp.js-on .reveal { opacity: 1; transform: none; transition: none; }
   }
 
   /* ---- decorative halftone texture ---- */
@@ -1271,6 +1273,10 @@
 
 <script>
 (function () {
+  // JSが実行できた時だけフェードイン演出を有効化（無効時は本文が常に表示される）
+  var dogLpRoot = document.getElementById('dog-lp');
+  if (dogLpRoot) { dogLpRoot.classList.add('js-on'); }
+
   var revealEls = document.querySelectorAll('#dog-lp .reveal');
   function showAllReveals() {
     revealEls.forEach(function (el) { el.classList.add('in-view'); });
