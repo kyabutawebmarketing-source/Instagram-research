@@ -209,8 +209,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    padding: 4%;
+    object-fit: cover;
   }
   #dog-lp .hero-visual .chip-row {
     position: absolute;
@@ -478,6 +477,26 @@
     margin-bottom: 16px;
   }
   #dog-lp .feature-icon svg { width: 26px; height: 26px; }
+  /* q-max 説明図：静的な情報画像。タップ要素に見えないよう装飾を抑制 */
+  #dog-lp .qmax {
+    max-width: 660px;
+    margin: 40px auto 0;
+    text-align: center;
+  }
+  #dog-lp .qmax img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  #dog-lp .qmax figcaption {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
 
   /* ---- All products ---- */
   #dog-lp .all-products {
@@ -828,7 +847,7 @@
 
     <div class="hero-visual">
       <figure>
-        <img src="https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715" alt="加賀美健コラボ 冷感接触ドッグウェアを着た愛犬" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/2026Summer-doglp-fv.png?v=1784002240" alt="加賀美健コラボ 冷感接触ドッグウェアを着た愛犬" loading="lazy">
       </figure>
       <div class="chip-row">
         <span class="chip c-mint"></span>
@@ -1055,6 +1074,11 @@
           <p>90年以上のインナー技術による、突っ張らないストレッチ仕立て。</p>
         </div>
       </div>
+
+      <figure class="qmax reveal">
+        <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/q-max_c399f5e7-051f-4869-a18f-b35992bce224.png?v=1782361693" alt="接触冷感 q-max値の説明図" loading="lazy" draggable="false">
+        <figcaption>※接触冷感の仕組みを示す説明図です</figcaption>
+      </figure>
     </div>
   </section>
 
