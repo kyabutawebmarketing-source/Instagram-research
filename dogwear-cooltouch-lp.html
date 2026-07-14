@@ -556,6 +556,20 @@
 
   /* ---- Category links (shop directory) ---- */
   #dog-lp .shop-links { background: var(--cream); }
+  #dog-lp .shop-sub {
+    font-family: "Kiwi Maru", serif;
+    color: var(--sky-deep);
+    font-weight: 700;
+    margin: 4px 0 0;
+  }
+  #dog-lp .other-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 720px) { #dog-lp .other-grid { grid-template-columns: repeat(2, 1fr); } }
+  #dog-lp .other-grid .product-card { background: var(--paper); border: 1px solid var(--line); }
   #dog-lp .shop-links-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -822,7 +836,9 @@
         </p>
         <div class="artist-sign">Ken Kagami</div>
       </div>
-      <div class="artist-photo-wrap reveal no-photo"></div>
+      <div class="artist-photo-wrap reveal">
+        <img src="https://cdn.shopify.com/s/files/1/0687/9523/6528/files/image_2025_12_10.png?v=1783913237" alt="加賀美健氏のプロフィール写真" loading="lazy" onerror="this.parentElement.classList.add('no-photo');this.style.display='none';">
+      </div>
     </div>
   </section>
 
@@ -846,7 +862,7 @@
             <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
               <div class="pc-imgwrap">
                 <span class="color-label">ミント</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/5.png?v=1780535715" alt="涼ティー ミント" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/dogmodel_summer001.png?v=1783990805" alt="涼ティー ミント" width="800" height="800" loading="lazy">
               </div>
               <div class="name">涼ティー ミント</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
@@ -855,7 +871,7 @@
             <a class="product-card" href="https://hakutaka-shop.com/products/pets04">
               <div class="pc-imgwrap">
                 <span class="color-label">ピンク</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/6_280f9992-c140-4160-bc4f-70231d473387.png?v=1780535715" alt="涼ティー ピンク" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/9_88ed770c-df30-4de7-a92c-0ba23a523d16.png?v=1780535715" alt="涼ティー ピンク" width="800" height="800" loading="lazy">
               </div>
               <div class="name">涼ティー ピンク</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
@@ -877,7 +893,7 @@
             <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
               <div class="pc-imgwrap">
                 <span class="color-label">ミント</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/4_45d87179-b313-47ce-a0ef-3aae76fb9c1a.png?v=1780535715" alt="なんかちょっといい気分 ミント" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/8_bb653cba-3d3d-45ad-beee-86a2ba6485a6.png?v=1780535715" alt="なんかちょっといい気分 ミント" width="800" height="800" loading="lazy">
               </div>
               <div class="name">なんかちょっといい気分 ミント</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
@@ -886,7 +902,7 @@
             <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
               <div class="pc-imgwrap">
                 <span class="color-label">パープル</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/3_76bc1cc3-6bf2-473e-8aaf-51811c0c2197.png?v=1780535715" alt="なんかちょっといい気分 パープル" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/7_6d182822-2cf8-4015-916e-3a80d614ac06.png?v=1780535715" alt="なんかちょっといい気分 パープル" width="800" height="800" loading="lazy">
               </div>
               <div class="name">なんかちょっといい気分 パープル</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
@@ -905,19 +921,19 @@
         </div>
         <div class="design-block-body">
           <div class="product-row">
-            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets06">
               <div class="pc-imgwrap">
                 <span class="color-label">イエロー</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/2_e70f0f65-84cc-46e2-abc1-fe7f24e0d865.png?v=1780535715" alt="なんかちょっとかいてき イエロー" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/10.png?v=1780536946" alt="なんかちょっとかいてき イエロー" width="800" height="800" loading="lazy">
               </div>
               <div class="name">なんかちょっとかいてき イエロー</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
               <span class="btn outline">詳しく見る</span>
             </a>
-            <a class="product-card" href="https://hakutaka-shop.com/products/pets05">
+            <a class="product-card" href="https://hakutaka-shop.com/products/pets06">
               <div class="pc-imgwrap">
                 <span class="color-label">ブルー</span>
-                <img src="https://hakutaka-shop.com/cdn/shop/files/1.png?v=1780535715" alt="なんかちょっとかいてき ブルー" width="800" height="800" loading="lazy">
+                <img src="https://hakutaka-shop.com/cdn/shop/files/dogmodel_summer002.png?v=1783990770" alt="なんかちょっとかいてき ブルー" width="800" height="800" loading="lazy">
               </div>
               <div class="name">なんかちょっとかいてき ブルー</div>
               <div class="price">S／M／L／2L ・ ¥2,480（税込）</div>
@@ -1043,21 +1059,56 @@
     <div class="wrap center reveal">
       <span class="eyebrow">SHOP MORE</span>
       <h2>ほかのアイテムもチェック</h2>
-      <div class="shop-links-grid">
-        <a class="shop-link is-wide" href="https://hakutaka-shop.com/products/pets04">
-          <span class="sl-dot">▼</span>
-          <span class="sl-name">涼ティー（ミント／ピンク）</span>
-          <span class="sl-arrow" aria-hidden="true">→</span>
+      <p class="shop-sub">通年使えるストレッチ素材</p>
+
+      <div class="other-grid">
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet001">
+          <div class="pc-imgwrap">
+            <span class="color-label">クリーム</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/dogwear03_dakko_06.webp?v=1758765799" alt="抱っこ1回ワン百円 クリーム" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">抱っこ1回ワン百円 クリーム</div>
+          <div class="price">¥1,980（税込）</div>
         </a>
-        <a class="shop-link is-wide" href="https://hakutaka-shop.com/products/pets05">
-          <span class="sl-dot">▼</span>
-          <span class="sl-name">なんかちょっといい気分／かいてき</span>
-          <span class="sl-arrow" aria-hidden="true">→</span>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet001">
+          <div class="pc-imgwrap">
+            <span class="color-label">チャコール</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/DSC03163.jpg?v=1762258918" alt="抱っこ1回ワン百円 チャコール" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">抱っこ1回ワン百円 チャコール</div>
+          <div class="price">¥1,980（税込）</div>
         </a>
-        <a class="shop-link is-wide" href="https://hakutaka-shop.com">
-          <span class="sl-dot">▼</span>
-          <span class="sl-name">hakutaka オンラインストア TOP</span>
-          <span class="sl-arrow" aria-hidden="true">→</span>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet002">
+          <div class="pc-imgwrap">
+            <span class="color-label">チャコール</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/dogwear02_chaimu_07.webp?v=1758765799" alt="チャイムや来客に吠えます チャコール" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">チャイムや来客に吠えます チャコール</div>
+          <div class="price">¥1,980（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet002">
+          <div class="pc-imgwrap">
+            <span class="color-label">ピンク</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/DSC03144.jpg?v=1762258805" alt="チャイムや来客に吠えます ピンク" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">チャイムや来客に吠えます ピンク</div>
+          <div class="price">¥1,980（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet003">
+          <div class="pc-imgwrap">
+            <span class="color-label">ベージュ</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/dogwear01_kokohore_03.webp?v=1758765799" alt="ここ掘れワンワン ベージュ" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">ここ掘れワンワン ベージュ</div>
+          <div class="price">¥1,980（税込）</div>
+        </a>
+        <a class="product-card" href="https://hakutaka-shop.com/products/pet003">
+          <div class="pc-imgwrap">
+            <span class="color-label">イエロー</span>
+            <img src="https://hakutaka-shop.com/cdn/shop/files/DSC03187.jpg?v=1762259092" alt="ここ掘れワンワン イエロー" width="800" height="800" loading="lazy">
+          </div>
+          <div class="name">ここ掘れワンワン イエロー</div>
+          <div class="price">¥1,980（税込）</div>
         </a>
       </div>
     </div>
