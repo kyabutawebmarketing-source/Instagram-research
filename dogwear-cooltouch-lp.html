@@ -380,19 +380,24 @@
     box-shadow: 0 4px 12px rgba(10,44,66,0.08);
     margin-bottom: 10px;
   }
-  #dog-lp .tag .sw {
+  #dog-lp .tag .swatchdot {
     width: 15px;
     height: 15px;
     border-radius: 50%;
     flex: none;
+    background-image: none !important;
+    font-size: 0;
     box-shadow: 0 0 0 2px #fff, 0 1px 3px rgba(10,44,66,0.28);
   }
-  #dog-lp .tag .sw + .sw { margin-left: -9px; }
-  #dog-lp .sw-mint { background: var(--mint); }
-  #dog-lp .sw-pink { background: var(--pink); }
-  #dog-lp .sw-purple { background: var(--purple); }
-  #dog-lp .sw-yellow { background: var(--sun); }
-  #dog-lp .sw-blue { background: var(--blue); }
+  /* テーマのアイコンフォント等が疑似要素で文字（#等）を差し込むのを防ぐ */
+  #dog-lp .tag .swatchdot::before,
+  #dog-lp .tag .swatchdot::after { content: none !important; display: none !important; }
+  #dog-lp .tag .swatchdot + .swatchdot { margin-left: -9px; }
+  #dog-lp .swatchdot-mint { background-color: var(--mint); }
+  #dog-lp .swatchdot-pink { background-color: var(--pink); }
+  #dog-lp .swatchdot-purple { background-color: var(--purple); }
+  #dog-lp .swatchdot-yellow { background-color: var(--sun); }
+  #dog-lp .swatchdot-blue { background-color: var(--blue); }
 
   #dog-lp .design-head {
     text-align: center;
@@ -940,7 +945,7 @@
       <!-- ---- 涼ティー（ミント×ピンク） ---- -->
       <div class="design-block c-mint reveal">
         <div class="design-head">
-          <span class="tag"><span class="sw sw-mint"></span><span class="sw sw-pink"></span>ミント&ピンク</span>
+          <span class="tag"><span class="swatchdot swatchdot-mint"></span><span class="swatchdot swatchdot-pink"></span>ミント&ピンク</span>
           <h3>涼ティー</h3>
           <p class="catch">夏の主役は、この一枚。</p>
         </div>
@@ -971,7 +976,7 @@
       <!-- ---- なんかちょっといい気分（ミント×パープル） ---- -->
       <div class="design-block c-purple reveal">
         <div class="design-head">
-          <span class="tag"><span class="sw sw-mint"></span><span class="sw sw-purple"></span>ミント&パープル</span>
+          <span class="tag"><span class="swatchdot swatchdot-mint"></span><span class="swatchdot swatchdot-purple"></span>ミント&パープル</span>
           <h3>なんかちょっといい気分</h3>
           <p class="catch">着た瞬間、なんかちょっといい気分。</p>
         </div>
@@ -1002,7 +1007,7 @@
       <!-- ---- なんかちょっとかいてき（イエロー×ブルー） ---- -->
       <div class="design-block c-blue reveal">
         <div class="design-head">
-          <span class="tag"><span class="sw sw-yellow"></span><span class="sw sw-blue"></span>イエロー&ブルー</span>
+          <span class="tag"><span class="swatchdot swatchdot-yellow"></span><span class="swatchdot swatchdot-blue"></span>イエロー&ブルー</span>
           <h3>なんかちょっとかいてき</h3>
           <p class="catch">ひんやり着られて、なんかちょっと快適。</p>
         </div>
