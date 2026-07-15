@@ -443,6 +443,22 @@ a{color:#e07b1a;text-decoration:none}
 .foot a{color:#f5a623}
 .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:12px}
 
+/* ── GALLERY ── */
+.work-gallery{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  margin:20px 0;
+}
+.work-gallery img{
+  width:100%;height:auto;border-radius:var(--radius);
+  border:1px solid var(--bd);
+}
+@media(max-width:768px){
+  .work-gallery{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:500px){
+  .work-gallery{grid-template-columns:1fr}
+}
+
 /* ── RESPONSIVE ── */
 @media(max-width:600px){
   .sec-hd h2{font-size:13.5px}
@@ -804,6 +820,12 @@ a{color:#e07b1a;text-decoration:none}
         <div class="str-body">
           <p>なつみかんは、ご依頼の受付から絵師による制作、額縁への仕上げ、ラッピング・発送まで、<strong>すべてを自社で一気通貫して行います</strong>。制作を外部に丸投げするサービスとは異なり、担当スタッフが一つひとつのご注文に責任をもって関わるため、品質・納期・要望への対応すべてにおいてブレが生じません。</p>
           <p>「衣装をゴルフウェアにしたい」「思い出の庭を背景に描いてほしい」「ネームインポエムも入れたい」といった細かいリクエストも、外注特有の「伝言ゲーム」なしで絵師に直接届きます。だからこそ、お祝いの席で涙を流して喜ばれることも珍しくありません。</p>
+          <div class="work-gallery" style="margin:24px 0">
+            <img src="sample_kanreki.jpg" alt="還暦祝い似顔絵作成例">
+            <img src="sample_koki.jpg" alt="古希祝い似顔絵作成例">
+            <img src="sample_kizyu.jpg" alt="喜寿祝い似顔絵作成例">
+            <img src="sample_sanzyu.jpg" alt="三寿祝い似顔絵作成例">
+          </div>
           <div class="voice-wrap" style="margin-top:12px">
             <div class="voice-ttl">⭐ お客様の声</div>
             <div class="voice-cards">
