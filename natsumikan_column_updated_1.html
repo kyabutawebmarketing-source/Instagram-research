@@ -433,13 +433,36 @@ a{color:#e07b1a;text-decoration:none}
 .foot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:12px}
 
 /* ── GALLERY ── */
+.gallery-wrap{
+  border:1px solid var(--bd);border-radius:var(--radius);
+  overflow:hidden;margin:20px 0;background:#fff;
+}
+.gallery-hd{
+  background:var(--org-m);border-bottom:1px solid var(--bd);
+  padding:10px 14px;
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.gallery-hd .gallery-mark{
+  background:var(--org);color:#fff;
+  font-size:10.5px;font-weight:700;
+  padding:4px 9px;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;
+}
+.gallery-hd .gallery-sub{
+  font-size:11px;color:var(--brn);font-weight:700;
+}
 .work-gallery{
   display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
-  margin:20px 0;
+  padding:14px;
 }
+.work-gallery figure{margin:0}
 .work-gallery img{
   width:100%;height:auto;border-radius:var(--radius);
-  border:1px solid var(--bd);
+  border:1px solid var(--bd);display:block;
+}
+.work-gallery figcaption{
+  font-size:10.5px;color:var(--brn);font-weight:700;
+  text-align:center;margin-top:6px;line-height:1.4;
 }
 @media(max-width:768px){
   .work-gallery{grid-template-columns:repeat(2,1fr)}
@@ -807,11 +830,29 @@ a{color:#e07b1a;text-decoration:none}
         <div class="str-body">
           <p>なつみかんは、ご依頼の受付から絵師による制作、額縁への仕上げ、ラッピング・発送まで、<strong>すべてを自社で一気通貫して行います</strong>。制作を外部に丸投げするサービスとは異なり、担当スタッフが一つひとつのご注文に責任をもって関わるため、品質・納期・要望への対応すべてにおいてブレが生じません。</p>
           <p>「衣装をゴルフウェアにしたい」「思い出の庭を背景に描いてほしい」「ネームインポエムも入れたい」といった細かいリクエストも、外注特有の「伝言ゲーム」なしで絵師に直接届きます。だからこそ、お祝いの席で涙を流して喜ばれることも珍しくありません。</p>
-          <div class="work-gallery" style="margin:24px 0">
-            <img src="sample_kanreki.jpg" alt="還暦祝い似顔絵作成例">
-            <img src="sample_koki.jpg" alt="古希祝い似顔絵作成例">
-            <img src="sample_kizyu.jpg" alt="喜寿祝い似顔絵作成例">
-            <img src="sample_sanzyu.jpg" alt="三寿祝い似顔絵作成例">
+          <div class="gallery-wrap">
+            <div class="gallery-hd">
+              <span class="gallery-mark">なつみかん制作実績</span>
+              <span class="gallery-sub">すべて自社の絵師が一枚ずつ手描き</span>
+            </div>
+            <div class="work-gallery">
+              <figure>
+                <img src="sample_kanreki.jpg" alt="なつみかん 還暦祝い似顔絵作成例">
+                <figcaption>還暦祝い似顔絵作成例</figcaption>
+              </figure>
+              <figure>
+                <img src="sample_koki.jpg" alt="なつみかん 古希祝い似顔絵作成例">
+                <figcaption>古希祝い似顔絵作成例</figcaption>
+              </figure>
+              <figure>
+                <img src="sample_kizyu.jpg" alt="なつみかん 喜寿祝い似顔絵作成例">
+                <figcaption>喜寿祝い似顔絵作成例</figcaption>
+              </figure>
+              <figure>
+                <img src="sample_sanzyu.jpg" alt="なつみかん 三寿祝い似顔絵作成例">
+                <figcaption>三寿祝い似顔絵作成例</figcaption>
+              </figure>
+            </div>
           </div>
           <div class="voice-wrap" style="margin-top:12px">
             <div class="voice-ttl">⭐ お客様の声</div>
