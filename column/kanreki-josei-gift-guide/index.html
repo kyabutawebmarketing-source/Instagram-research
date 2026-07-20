@@ -314,22 +314,6 @@ a.banner img, a.cta-img img{
 .track-card .tc-num small{font-size:11px;font-weight:400;margin-left:2px}
 .track-card .tc-label{font-size:10.5px;color:var(--sub);line-height:1.4;margin-top:2px}
 
-/* ── INLINE CTA ── */
-.icta{
-  background:var(--org-l);border:2px dashed var(--org);
-  border-radius:var(--radius);padding:14px 16px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin:24px 0;flex-wrap:wrap;
-}
-.icta p{font-size:13px;font-weight:700;color:var(--brn);margin:0;line-height:1.5}
-.icta p small{display:block;font-size:11px;font-weight:400;color:#888;margin-top:2px}
-.icta-btn{
-  background:var(--org);color:#fff;
-  border-radius:50px;padding:10px 20px;
-  font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;
-}
-.icta-btn:hover{background:var(--org-d);color:#fff}
-
 /* ── FAQ ── */
 .faq-item{border:1px solid var(--bd);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
 .faq-q{
@@ -382,33 +366,6 @@ a.banner img, a.cta-img img{
 .sum-list li::before{content:"✅";position:absolute;left:0;top:7px;font-size:14px}
 .sum-list strong{color:var(--org-d)}
 
-/* ── CTA BOX ── */
-.ctabox{
-  background:var(--org);border-radius:var(--radius);
-  padding:24px 18px;text-align:center;margin:20px 0;color:#fff;
-}
-.ctabox-ttl{font-size:16px;font-weight:700;margin-bottom:6px;line-height:1.5}
-.ctabox-sub{font-size:12px;opacity:.9;margin-bottom:18px;line-height:1.6}
-.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.cta-btn{
-  display:inline-block;background:#fff;color:var(--org-d);
-  font-weight:700;font-size:13.5px;padding:12px 24px;
-  border-radius:50px;text-decoration:none;
-  box-shadow:0 3px 10px rgba(0,0,0,.2);
-  min-width:160px;text-align:center;
-}
-.cta-btn:hover{opacity:.9;color:var(--org-d)}
-
-/* ── WEB CTA LINK ── */
-.web-cta{
-  display:block;
-  background:var(--org);color:#fff;
-  text-align:center;font-size:13.5px;font-weight:700;
-  padding:13px 20px;border-radius:50px;margin:16px auto;
-  max-width:320px;box-shadow:0 3px 10px rgba(224,123,26,.35);
-}
-.web-cta:hover{background:var(--org-d);color:#fff}
-
 /* ── DIVIDER ── */
 .div-band{
   background:var(--org-m);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);
@@ -426,7 +383,6 @@ a.banner img, a.cta-img img{
   .sec-hd h2{font-size:13.5px}
   .gen-table{font-size:11px}
   .gen-table th,.gen-table td{padding:7px 6px}
-  .icta{flex-direction:column;align-items:stretch;text-align:center}
 }
 </style>
 <!-- 構造化データ: Article -->
@@ -552,7 +508,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- LEAD -->
   <div class="lead" style="margin-top:20px">
-    還暦を迎える女性へのプレゼント選びで、「赤いちゃんちゃんこは古い気がするけど、何を贈ればいいかわからない」「母・義母・上司…相手によって何が正解か変わる」と悩んでいませんか。<br><br>
+    還暦を迎える女性へのプレゼント選びで、「赤いちゃんちゃんこは古い気がするけど、何を贈ればいいかわからない」「母・義母・祖母、上司…相手によって何が正解か変わる」と悩んでいませんか。<br><br>
     本記事では、<strong>現代の60歳女性のリアルな声や複数のギフト専門サイトの傾向</strong>をもとに、失敗しないギフト選びの原則・予算相場・マナー・おすすめジャンルまでを網羅的に解説します。
   </div>
 
@@ -583,11 +539,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </ol>
   </nav>
 
-  <!-- INLINE CTA 1 -->
-  <div class="icta">
-    <p>還暦祝いの定番「手描き似顔絵」<br><small>額縁・文字入れ込み 税込9,878円〜／最短翌日発送</small></p>
-    <a href="https://www.natsumikan.shop/" target="_blank" class="icta-btn">公式サイトを見る</a>
-  </div>
+  <!-- BANNER 1 -->
+  <a href="https://skui.jp/redirect/natsumikancolumn" target="_blank" class="banner" aria-label="似顔絵購入でAmazonギフト券500円分プレゼント">
+    <img src="images/guideBanner.png" alt="似顔絵購入でAmazonギフト券500円分プレゼント">
+  </a>
 
   <!-- SECTION 1 -->
   <section class="sec" id="s1">
@@ -712,9 +667,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <!-- INLINE CTA 2 -->
-  <div class="icta">
-    <p>形に残る記念を贈りたいなら似顔絵も選択肢のひとつ<br><small>60代・女性でも安心の優しいタッチ</small></p>
-    <a href="https://www.natsumikan.shop/" target="_blank" class="icta-btn">サンプルを見る</a>
+  <div style="text-align:center;margin:24px 0;">
+    <a href="https://skui.jp/redirect/natsumikancolumn" target="_blank" class="cta-img" style="max-width:520px;margin:0 auto;"><img src="images/CTABanner.png" alt="似顔絵なつみかん公式サイトはこちら"></a>
   </div>
 
   <!-- SECTION 7 -->
@@ -820,14 +774,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>こうした特長から、なつみかんは既製品にはない温かみを持つオーダーメイド・ギフトとして、選択肢のひとつになり得ます。もっとも、これらは主に自社の実績・仕様に基づく紹介であるため、実際に注文する際は他の似顔絵サービスのサンプルや価格とも比較したうえで、ご自身の予算・納期・好みに合ったお店を選ぶことをおすすめします。</p>
       <p>3万円前後の予算内であれば、還暦を迎える本人の似顔絵に加えて、衣装変更やメッセージ入れといったオプションを組み合わせても十分に収まる価格帯です。「赤いちゃんちゃんこは着たくない」という方でも、絵の中だけ衣装を変えることで、本人の希望を尊重しながら還暦らしい一枚に仕上げられます。</p>
 
-      <div class="ctabox">
-        <div class="ctabox-ttl">似顔絵なつみかんを見てみる</div>
-        <div class="ctabox-sub">額縁・文字入れ込み 税込9,878円〜／最短翌日発送</div>
-        <div class="cta-btns">
-          <a href="https://www.natsumikan.shop/" target="_blank" class="cta-btn">公式サイトを見る</a>
-          <a href="https://www.natsumikan.shop/price.html" target="_blank" class="cta-btn">料金一覧を見る</a>
-        </div>
-      </div>
+      <a href="https://skui.jp/redirect/natsumikancolumn" target="_blank" class="cta-img" style="max-width:520px;margin:16px auto;"><img src="images/CTABanner.png" alt="似顔絵なつみかん公式サイトはこちら"></a>
     </div>
   </section>
 
@@ -871,14 +818,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <!-- FINAL CTA -->
-  <div class="ctabox">
-    <div class="ctabox-ttl">世界にひとつの還暦祝いを贈りませんか</div>
-    <div class="ctabox-sub">手描き似顔絵 なつみかん｜額縁・文字入れ込み 税込9,878円〜／最短翌日発送</div>
-    <div class="cta-btns">
-      <a href="https://www.natsumikan.shop/" target="_blank" class="cta-btn">公式サイトを見る</a>
-    </div>
-  </div>
+  <!-- BANNER 2 -->
+  <a href="https://skui.jp/redirect/natsumikancolumn" target="_blank" class="banner" aria-label="似顔絵購入でAmazonギフト券500円分プレゼント">
+    <img src="images/guideBanner.png" alt="似顔絵購入でAmazonギフト券500円分プレゼント">
+  </a>
 
   <div class="note-box" style="font-style:italic">
     本記事は複数のギフト情報サイトの傾向や還暦祝いに関する一般的なマナーを参考に、編集部独自の視点でまとめたものです。贈答のマナーは地域や家庭によって異なる場合がありますので、あらかじめご家族に確認いただくことをおすすめします。
