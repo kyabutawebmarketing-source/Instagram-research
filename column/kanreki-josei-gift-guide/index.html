@@ -391,6 +391,17 @@ a.banner img, a.cta-img img{
 .sum-list li::before{content:"✅";position:absolute;left:0;top:7px;font-size:14px}
 .sum-list strong{color:var(--org-d)}
 
+/* ── RELATED COLUMNS ── */
+.related-list{list-style:none;padding:0;margin:0}
+.related-list li{border-bottom:1px dotted var(--bd)}
+.related-list li:last-child{border-bottom:none}
+.related-list li a{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:12px 4px;font-size:13.5px;font-weight:700;color:#222;line-height:1.6;
+}
+.related-list li a::after{content:"›";color:var(--org);font-size:20px;font-weight:700;flex-shrink:0}
+.related-list li a:hover{color:var(--org)}
+
 /* ── DIVIDER ── */
 .div-band{
   background:var(--org-m);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);
@@ -858,6 +869,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li><strong>NGギフト・忌み言葉に注意</strong>——弔事を連想させるもの、現金・商品券は避けるのが無難</li>
         <li><strong>体験ギフトやオーダーメイドも選択肢に</strong>——モノより思い出、既製品にはない特別感を届けられる</li>
         <li><strong>手描き似顔絵は形に残る記念として人気</strong>——注文先は誇張のなさ・品質の安定・明朗会計・納期・事前確認の5つで選ぶと失敗しにくい</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- RELATED COLUMNS -->
+  <section class="sec" id="related">
+    <h2 class="sec-hd-plain" style="border-radius:var(--radius) var(--radius) 0 0;border-left:4px solid var(--org)">
+      関連コラム
+    </h2>
+    <div class="sec-body" style="border-radius:0 0 var(--radius) var(--radius)">
+      <ul class="related-list">
+        <li><a href="https://www.natsumikan.shop/column/kanreki-present-nigaoe/" target="_blank">還暦祝いの似顔絵で失敗しない5つの選び方【専門店が解説】</a></li>
+        <li><a href="https://www.natsumikan.shop/column/choju-present-nigaoe/" target="_blank">還暦・古希・米寿の長寿祝いプレゼントで失敗しない「唯一の正解」</a></li>
       </ul>
     </div>
   </section>
