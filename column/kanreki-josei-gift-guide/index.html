@@ -329,8 +329,12 @@ a.banner img, a.cta-img img{
 /* ── TOUCH SAMPLES ── */
 .touch-samples{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
 .touch-sample{text-align:center}
-.touch-sample img{
-  width:100%;height:auto;border:1px solid var(--bd);border-radius:var(--radius);
+.touch-sample .ts-img-wrap{
+  height:240px;display:flex;align-items:center;justify-content:center;
+}
+.touch-sample .ts-img-wrap img{
+  height:100%;width:auto;max-width:100%;object-fit:contain;
+  border:1px solid var(--bd);border-radius:var(--radius);
   box-shadow:0 2px 8px rgba(0,0,0,.08);
 }
 .touch-sample .ts-label{
@@ -419,6 +423,7 @@ a.banner img, a.cta-img img{
   .sec-hd h2{font-size:13.5px}
   .gen-table{font-size:11px}
   .gen-table th,.gen-table td{padding:7px 6px}
+  .touch-sample .ts-img-wrap{height:150px}
 }
 </style>
 <!-- 構造化データ: Article -->
@@ -783,12 +788,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p>なつみかんでは、あったかタッチ／くっきりタッチの2種類の絵柄から選べ、いずれも「本人らしさ」を大切にしながら誇張を抑えた描き方が特徴です。公式サイトには60代前後のサンプルも掲載されているため、実際に贈る前にタッチの雰囲気を確認できるのも安心材料になります。</p>
       <div class="touch-samples">
         <div class="touch-sample">
-          <img src="images/n_touch_sample.jpg" alt="あったかタッチのサンプル似顔絵（60代女性・還暦祝い）">
+          <div class="ts-img-wrap"><img src="images/n_touch_sample.jpg" alt="あったかタッチのサンプル似顔絵（60代女性・還暦祝い）"></div>
           <div class="ts-label">あったかタッチ</div>
           <div class="ts-desc">水彩の優しい滲みを活かした、柔らかい雰囲気のタッチ</div>
         </div>
         <div class="touch-sample">
-          <img src="images/c_touch_sample.jpg" alt="くっきりタッチのサンプル似顔絵（60代女性・還暦祝い）">
+          <div class="ts-img-wrap"><img src="images/c_touch_sample.jpg" alt="くっきりタッチのサンプル似顔絵（60代女性・還暦祝い）"></div>
           <div class="ts-label">くっきりタッチ</div>
           <div class="ts-desc">輪郭線をはっきり描く、明るく元気な印象のタッチ</div>
         </div>
