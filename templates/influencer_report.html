@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>インフルエンサー分析レポート</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f8fafc; --card-bg: #fff; --border: #e2e8f0; --text: #1e293b;
+    --text-muted: #64748b; --accent: #7c3aed; --accent-light: #ede9fe;
+    --green: #10b981; --orange: #f59e0b; --radius: 12px;
+    --shadow: 0 1px 3px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.05);
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", sans-serif; background: var(--bg); color: var(--text); padding: 32px 36px; }
+  h1 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+  .meta { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; }
+  .genre-badge { display:inline-block; padding:4px 12px; border-radius:20px; background:var(--accent-light); color:var(--accent); font-weight:700; font-size:13px; margin-left:8px; }
+
+  .influencer-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px 28px; margin-bottom: 28px;
+  }
+  .card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; flex-wrap:wrap; gap:12px;}
+  .handle { font-size: 18px; font-weight: 800; color: var(--accent); }
+  .display-name { font-size: 13px; color: var(--text-muted); }
+  .bio { font-size: 12px; color: var(--text-muted); font-style: italic; margin-top: 6px; max-width: 480px; }
+
+  .stats-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap:12px; margin-bottom:20px; }
+  .stat-box { background: var(--bg); border-radius:8px; padding:12px 14px; }
+  .stat-box .label { font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.04em; }
+  .stat-box .value { font-size:18px; font-weight:700; margin-top:4px; }
+
+  .charts-row { display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:20px; }
+  .charts-row-4 { display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; }
+  @media (max-width: 1000px) { .charts-row, .charts-row-4 { grid-template-columns: 1fr 1fr; } }
+  .chart-box { background: var(--bg); border-radius: 8px; padding: 14px; }
+  .chart-box h4 { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted); margin-bottom:10px; }
+  .chart-wrap { position:relative; height:180px; }
+
+  .estimate-badge {
+    display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px;
+    background:#fef3c7; color:#92400e; margin-left:6px; vertical-align:middle;
+  }
+  .pr-pill { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700; background:#fce7f3; color:#9d174d; }
+  .country-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .country-tag { font-size:11px; padding:3px 9px; border-radius:14px; background:var(--accent-light); color:var(--accent); font-weight:600; }
+</style>
+</head>
+<body>
+
+<h1>インフルエンサー分析レポート
+  {% if genre %}<span class="genre-badge">{{ genre }}</span>{% endif %}
+</h1>
+<div class="meta">{{ influencers|length }} 件分析 &bull; 生成日時 {{ generated_at }}</div>
+
+{% for inf in influencers %}
+<div class="influencer-card">
+  <div class="card-header">
+    <div>
+      <div class="handle">@{{ inf.username }}</div>
+      <div class="display-name">{{ inf.name or inf.username }}</div>
+      {% if inf.biography %}<div class="bio">{{ inf.biography[:140] }}{% if inf.biography|length > 140 %}...{% endif %}</div>{% endif %}
+    </div>
+    <div style="text-align:right;">
+      <div class="genre-badge">{{ inf.genre.genre }} ({{ "%.0f"|format(inf.genre.confidence * 100) }}%)</div>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="label">フォロワー数</div>
+      <div class="value">{{ "{:,}".format(inf.followers_count) }}</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">エンゲージメント率</div>
+      <div class="value">{{ "%.2f"|format(inf.engagement_rate.average) }}%</div>
+    </div>
+    <div class="stat-box">
+      <div class="label">PR率（過去3ヶ月）</div>
+      <div class="value">{{ "%.1f"|format(inf.pr_rate.pr_rate) }}%
+        <span style="font-size:11px; color:var(--text-muted); font-weight:400;">({{ inf.pr_rate.pr_posts }}/{{ inf.pr_rate.total_posts }}件)</span>
+      </div>
+    </div>
+    <div class="stat-box">
+      <div class="label">投稿数</div>
+      <div class="value">{{ inf.media_count }}</div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-box">
+      <h4>フォロワー数推移（過去3ヶ月）
+        {% if inf.trends.is_estimated %}<span class="estimate-badge">※一部推定値</span>{% endif %}
+      </h4>
+      <div class="chart-wrap"><canvas id="followerTrend_{{ loop.index }}"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>エンゲージメント率推移（過去3ヶ月）</h4>
+      <div class="chart-wrap"><canvas id="engagementTrend_{{ loop.index }}"></canvas></div>
+    </div>
+  </div>
+
+  <div class="charts-row-4">
+    <div class="chart-box">
+      <h4>インフルエンサー属性：年齢層 <span class="estimate-badge">※推定値</span></h4>
+      <div class="chart-wrap"><canvas id="infAge_{{ loop.index }}"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>インフルエンサー属性：性別 <span class="estimate-badge">※推定値</span></h4>
+      <div class="chart-wrap"><canvas id="infGender_{{ loop.index }}"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>フォロワー属性：年齢層 <span class="estimate-badge">※推定値</span></h4>
+      <div class="chart-wrap"><canvas id="audAge_{{ loop.index }}"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h4>フォロワー属性：性別 <span class="estimate-badge">※推定値</span></h4>
+      <div class="chart-wrap"><canvas id="audGender_{{ loop.index }}"></canvas></div>
+      <div class="country-tags">
+        {% for c in inf.audience_demographics.top_countries %}<span class="country-tag">{{ c }}</span>{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<script>
+const influencers = {{ influencers_json }};
+const baseOptions = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: true, position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+};
+const lineOptions = {
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { display: false } },
+  scales: { y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,.06)' } }, x: { grid: { display: false } } }
+};
+
+influencers.forEach((inf, i) => {
+  const idx = i + 1;
+
+  const followerTrend = inf.trends.follower_trend || [];
+  new Chart(document.getElementById('followerTrend_' + idx), {
+    type: 'line',
+    data: {
+      labels: followerTrend.map(p => p.month),
+      datasets: [{
+        data: followerTrend.map(p => p.followers_count),
+        borderColor: 'rgb(124, 58, 237)', backgroundColor: 'rgba(124, 58, 237, 0.1)',
+        borderWidth: 2.5, pointRadius: 4, fill: true, tension: 0.3,
+      }]
+    },
+    options: lineOptions
+  });
+
+  const engTrend = inf.trends.engagement_trend || [];
+  new Chart(document.getElementById('engagementTrend_' + idx), {
+    type: 'line',
+    data: {
+      labels: engTrend.map(p => p.month),
+      datasets: [{
+        data: engTrend.map(p => p.engagement_rate),
+        borderColor: 'rgb(236, 72, 153)', backgroundColor: 'rgba(236, 72, 153, 0.1)',
+        borderWidth: 2.5, pointRadius: 4, fill: true, tension: 0.3,
+      }]
+    },
+    options: lineOptions
+  });
+
+  function doughnut(canvasId, distribution, colors) {
+    const labels = Object.keys(distribution);
+    const values = Object.values(distribution);
+    new Chart(document.getElementById(canvasId), {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data: values, backgroundColor: colors }] },
+      options: baseOptions
+    });
+  }
+
+  const ageColors = ['#a78bfa', '#7c3aed', '#ec4899', '#f59e0b', '#10b981'];
+  const genderColors = ['#ec4899', '#3b82f6'];
+
+  doughnut('infAge_' + idx, inf.influencer_demographics.age_distribution, ageColors);
+  doughnut('infGender_' + idx, inf.influencer_demographics.gender_distribution, genderColors);
+  doughnut('audAge_' + idx, inf.audience_demographics.age_distribution, ageColors);
+  doughnut('audGender_' + idx, inf.audience_demographics.gender_distribution, genderColors);
+});
+</script>
+</body>
+</html>
