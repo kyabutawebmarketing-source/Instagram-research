@@ -79,6 +79,39 @@ def is_japan_based(biography: str = "", full_name: str = "", locations: list[str
     return False
 
 
+# Keywords strongly suggesting a corporate/brand account rather than
+# an individual influencer. Checked against bio + display name.
+_CORPORATE_KEYWORDS = [
+    # Japanese legal entities / business terms
+    "株式会社", "有限会社", "合同会社", "合資会社", "一般社団法人", "特定非営利活動法人",
+    "公益財団法人", "社団法人", "財団法人",
+    # Common corporate signals in bios
+    "公式", "オフィシャル", "公式アカウント", "official account",
+    "お問い合わせ", "ご予約", "採用", "求人",
+    # English legal suffixes
+    " inc.", " inc,", " corp.", " corp,", " ltd.", " ltd,", " llc",
+    " co.,", "co., ltd", "& co.", "holdings",
+    # Store / brand signals
+    "online shop", "オンラインショップ", "通販", "ネットショップ",
+    "代表", "ceo", "coo", "代表取締役",
+]
+
+_CORPORATE_RE = re.compile(
+    "|".join(re.escape(kw) for kw in _CORPORATE_KEYWORDS),
+    re.IGNORECASE,
+)
+
+
+def is_corporate_account(biography: str = "", full_name: str = "") -> bool:
+    """Return True if the account looks like a brand/company rather than a person.
+
+    Uses keyword matching on bio and display name. Errs toward false negatives
+    (letting borderline accounts through) to avoid dropping real influencers.
+    """
+    text = f"{biography or ''} {full_name or ''}".lower()
+    return bool(_CORPORATE_RE.search(text))
+
+
 def detect_pr_posts(media_list: list[dict]) -> list[dict]:
     """Flag posts whose caption contains a sponsorship/PR marker."""
     flagged = []

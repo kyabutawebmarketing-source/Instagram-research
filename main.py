@@ -377,6 +377,9 @@ def cmd_influencer(args: argparse.Namespace) -> None:
 
     influencers = []
     skipped_non_japan = 0
+    skipped_low_followers = 0
+    skipped_corporate = 0
+
     for profile in profiles:
         username = profile.get("username") or profile.get("ownerUsername") or ""
         if not username:
@@ -385,6 +388,16 @@ def cmd_influencer(args: argparse.Namespace) -> None:
         media_count = profile.get("postsCount", 0) or 0
         biography = profile.get("biography", "") or ""
         name = profile.get("fullName", "") or username
+
+        # ── フォロワー数フィルター ──
+        if followers_count < args.min_followers:
+            skipped_low_followers += 1
+            continue
+
+        # ── 企業アカウント除外 ──
+        if not args.include_corporate and influencer_analyzer.is_corporate_account(biography, name):
+            skipped_corporate += 1
+            continue
 
         raw_posts = profile.get("latestPosts") or profile.get("posts") or []
         media = [
@@ -400,6 +413,7 @@ def cmd_influencer(args: argparse.Namespace) -> None:
         ]
         locations = [p.get("locationName", "") for p in raw_posts if p.get("locationName")]
 
+        # ── 日本拠点フィルター ──
         if not args.no_region_filter and not influencer_analyzer.is_japan_based(
             biography, name, locations
         ):
@@ -411,11 +425,15 @@ def cmd_influencer(args: argparse.Namespace) -> None:
         )
         influencers.append(record)
 
+    if skipped_low_followers:
+        print(f"Skipped {skipped_low_followers} account(s) with fewer than {args.min_followers:,} followers.")
+    if skipped_corporate:
+        print(f"Skipped {skipped_corporate} corporate/brand account(s).")
     if skipped_non_japan:
-        print(f"Skipped {skipped_non_japan} non-Japan-based account(s) (bio/location heuristic).")
+        print(f"Skipped {skipped_non_japan} non-Japan-based account(s).")
 
     if not influencers:
-        print("No influencer data could be analyzed (after Japan-region filtering). Exiting.")
+        print("No influencer data could be analyzed after filtering. Try increasing --limit or lowering --min-followers.")
         sys.exit(1)
 
     data = {
@@ -520,6 +538,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     inf_parser.add_argument("--limit", type=int, default=10, help="Max number of influencers to discover")
     inf_parser.add_argument("--posts", type=int, default=30, help="Posts per profile to fetch")
+    inf_parser.add_argument(
+        "--min-followers", type=int, default=1000,
+        help="Minimum follower count (default: 1000)",
+    )
+    inf_parser.add_argument(
+        "--include-corporate", action="store_true",
+        help="Include corporate/brand accounts (default: excluded)",
+    )
     inf_parser.add_argument(
         "--no-region-filter", action="store_true",
         help="Disable the Japan-based heuristic filter (default: Japan only)",
